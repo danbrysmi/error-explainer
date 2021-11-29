@@ -9,6 +9,7 @@ class Converter():
         self.block_starters = ["if", "elif", "else", "while", "for"]
         f = open(f"data/{file}", "r")
         self.lines = f.readlines()
+        f.close()
 
         print("Initial")
         # removing "\n" from end of each line in text file
@@ -30,6 +31,11 @@ class Converter():
         self.lines = list(filter(lambda x: self.filter_newlines(x), self.lines))
         for line in self.lines:
             print([line])
+
+        self.output = "\n".join(self.lines)
+        g = open("data/output.txt", "w")
+        g.write(self.output)
+        g.close()
 
 
     # TIDYING UP THE CODE
@@ -72,8 +78,7 @@ class Converter():
             return line
 
     def check_syntax(self, line):
-        line1 = self.missing_colon(line)
-        return line1
+        return self.missing_colon(line)
 
 converter = Converter("python.txt")
 
