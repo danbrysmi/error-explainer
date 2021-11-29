@@ -1,4 +1,5 @@
 # Python Checker by Dan Bryan-Smith
+import re
 
 class Converter():
     """
@@ -14,6 +15,9 @@ class Converter():
         print("Initial")
         # removing "\n" from end of each line in text file
         self.lines[:-1] = list(map(lambda x: x[:-1], self.lines[:-1]))
+
+        if self.lines[-1][-1] == "\n":
+            self.lines[-1] = self.lines[-1][:-1]
         for line in self.lines:
             print([line])
 
@@ -77,7 +81,20 @@ class Converter():
         else:
             return line
 
+    def assign_as_compare(self, line):
+        if len(line.split()) == 0:
+            return line
+        if re.search("==", line):
+            for keyword in self.block_starters:
+                if keyword in line.split():
+                    return line
+            else:
+                return line + ' # "==" may need to be "="'
+        else:
+            return line
+
     def check_syntax(self, line):
+        line = self.assign_as_compare(line)
         return self.missing_colon(line)
 
 converter = Converter("python.txt")
