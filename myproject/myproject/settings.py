@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Add the results application
-    'catalog.apps.ResultsConfig'
+    'results.apps.ResultsConfig'
 ]
 
 MIDDLEWARE = [
