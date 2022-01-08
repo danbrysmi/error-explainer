@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
+from django.conf import settings
+from django.conf.urls.static import static
 
+# list of endpoints and delegations
 urlpatterns = [
-    path('polls/', include('polls.urls')),
+path('', RedirectView.as_view(url='results/', permanent=True)),
     path('results/', include('results.urls')),
     path('admin/', admin.site.urls),
 ]
+# dealing with static files during development
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

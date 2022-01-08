@@ -9,5 +9,6 @@ from . import views
 #   kwargs - arbitary keyword arguments can be passed in a dictionary (? tbd)
 #   name - naming your URL so it can be referred to from elsewhere in Django
 urlpatterns = [
-    path('', views.error_result, name='result')
+    path('', views.error_result, name='result'),
+    path('', views.index, name='index'),
 ]

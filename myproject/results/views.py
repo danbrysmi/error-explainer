@@ -13,3 +13,6 @@ def error_result(request):
     html += error_guide("IndexError")
     html += "</body></html>"
     return HttpResponse(html)
+
+def index(request):
+    return HttpResponse("<html><body><form action=\"/action_page.php\"><textarea name=\"message\" rows=\"10\" cols=\"30\">The cat was playing in the garden.</textarea><br><br><input type=\"submit\"></form></\body></html>")
