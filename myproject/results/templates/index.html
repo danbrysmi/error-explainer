@@ -1,0 +1,20 @@
+{% extends "base_template.html" %}
+
+{% block content %}
+  <h1>Template Library Home</h1>
+  <p>Welcome to TemplateLibrary, a website developed by <em>Dan Bryan-Smith</em>!</p>
+  <h2>Dynamic content</h2>
+  <p>The library has the following record counts:</p>
+  <ul>
+    <li><strong>Templates:</strong> {{ num_templates }}</li>
+    <li><strong>Types:</strong> {{ num_types }}</li>
+  </ul>
+
+  <form action="solve" method="get">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}
