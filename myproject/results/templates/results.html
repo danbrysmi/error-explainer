@@ -11,5 +11,9 @@
   </ul>
 
   <h2>Trace</h2>
-  {{ error_trace}}
+  <div id=code-view>
+  <p>{{ error_trace}}</p>
+  </div>
+
+  <h4>It looks like your type of error was a {{error_type}}.</h4>
 {% endblock %}

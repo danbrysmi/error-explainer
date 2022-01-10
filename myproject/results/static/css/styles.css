@@ -2,4 +2,14 @@
     margin-top: 20px;
     padding: 0;
     list-style: none;
+    background: #ddd
+}
+
+#code-view p {
+  background: #FFD43B;
+  white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS */
+  width: 50%;
+}
+textarea {
+  width: 100%;
 }
