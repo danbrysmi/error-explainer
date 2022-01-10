@@ -16,4 +16,16 @@
   </div>
 
   <h4>It looks like your type of error was a {{error_type}}.</h4>
+  <h4>Template:</h4>
+  <br>
+  <h5>{{error_template}}</h5>
+  <br>
+  with parameters
+  {% for p in params %}
+    {% if forloop.last %}
+        and <{{forloop.counter}}> {{ p }}.
+    {% else %}
+        <{{forloop.counter}}> {{ p }},
+    {% endif %}
+{% endfor %}
 {% endblock %}
