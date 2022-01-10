@@ -1,8 +1,0 @@
-# Test Program
-
-print("Hello World!")
-print("Inline") # comment
-	<- tab here
-if egg
-    cool beans
-    a == 0

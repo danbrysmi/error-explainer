@@ -1,6 +1,0 @@
-print("Hello World!")
-print("Inline") 
-	<- tab here
-if egg<:>
-    cool beans
-    a == 0 # "==" may need to be "="
