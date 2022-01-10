@@ -14,11 +14,12 @@ class ErrorTemplate(models.Model):
     #     }
     def __str__(self):
         """String for representing the Model object."""
-        return f"{self.error_type.name} Template ID: {self.id}"
+        return self.template
 
 class ErrorType(models.Model):
     """Model representing a python traceback error type."""
-    name = models.CharField(max_length=30, help_text="Must be a python error class, e.g. TypeError")
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique id for this particular template.")
+    name = models.CharField(primary_key=True, max_length=30, help_text="Must be a python error class, e.g. TypeError")
 
     def __str__(self):
         """String for representing the Model object."""

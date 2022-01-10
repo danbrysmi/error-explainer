@@ -28,7 +28,7 @@ def index(request):
     # # Available books (status = 'a')
     # num_instances_available = BookInstance.objects.filter(status__exact='a').count()
     if request.method == "GET":
-        proposed_error_type = "help :("
+        proposed_error_type = ""
         form = SubmitErrorForm(initial={'error_trace': proposed_error_type})
 
     context = {
@@ -54,6 +54,10 @@ def solve(request):
     num_templates = ErrorTemplate.objects.all().count()
     num_types = ErrorType.objects.all().count()
 
+    if len(main_error) == 0:
+        main_error = ['Unknown']
+    main_error = main_error[0]
+    match_template(error_trace, main_error)
     context = {
         'num_templates': num_templates,
         'num_types': num_types,
@@ -61,3 +65,13 @@ def solve(request):
         'error_type': main_error[0],
     }
     return render(request, 'results.html', context=context)
+
+def match_template(error_trace, e_type):
+    """Method to find a error trace from the user input"""
+    templates = ErrorTemplate.objects.all().filter(error_type.name == e_type)
+    for e in templates:
+        pattern_str = re.sub("<[0-9]+", "[a-z]*", e.template)
+        pattern = re.compile(pattern_str)
+        if re.search(pattern, e.template):
+            print("Match found!")
+            return
