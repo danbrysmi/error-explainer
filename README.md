@@ -9,7 +9,7 @@
     - Provide example solutions for templates
     - Think about what the explanation 'panels' are going to look like
     - Website styling :)
-    - Re-add the other \___Error ones that were removed
+    - Re-add the other \_\_\_Error ones that were removed
 
 # Current Features:
     - Form that takes in text input
