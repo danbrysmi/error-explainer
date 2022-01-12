@@ -1,0 +1,20 @@
+{% extends "results.html" %}
+
+{% block explanation %}
+  <h2>Explanation</h2>
+  <p> {{ detailed_explanation}}</p>
+
+  <br><br>
+
+  <h2>Example</h2>
+  {{ python_example }}
+
+  <br><br>
+  
+  <h2>Current templates</h2>
+  <p>The library has the following record counts:</p>
+  <ul>
+    <li><strong>Templates:</strong> {{ num_templates }}</li>
+    <li><strong>Types:</strong> {{ num_types }}</li>
+  </ul>
+{% endblock %}
