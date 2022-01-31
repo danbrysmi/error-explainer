@@ -65,6 +65,7 @@ def solve(request):
 
     print(result)
     print(params)
+    tags = list(temp.tags.names())
 
     context = {
         'num_templates': num_templates,
@@ -72,7 +73,8 @@ def solve(request):
         'error_trace': error_trace,
         'error_type': main_error,
         'error_template': temp,
-        'params': params
+        'params': params,
+        'tags' : tags
     }
     return render(request, 'results.html', context=context)
 
@@ -82,44 +84,18 @@ def match_template(error_trace, etype):
     templates = ErrorTemplate.objects.all().filter(error_type = e_type)
     print(f"{len(templates)} templates found")
     for e in templates:
-        #print(f"{e.template}")
-        pattern = re.compile(e.template)
-        pattern_str = re.sub("<[0-9]+>", "'(.*)'", e.template)
+        # make sure regex characters are escaped before replacing
+        pattern_str = re.escape(e.template)
+        # replace <n> with wildcard
+        pattern_str = re.sub("<.*?>", "'(.*?)'", pattern_str)
 
-        print(f"pattern_str: {pattern_str}")
-        print(f"error_trace: {error_trace}")
-
+        # match wildcards to params
         if re.search(pattern_str, error_trace):
             trace_slices = re.findall(pattern_str, error_trace)
+            # return empty params if no wildcard matching
+            if trace_slices == []:
+                return e, []
+            # need index 0 as trace_slices = [(param1, param2)]
             return e, trace_slices[0]
-            #extract_params(e.template, trace_slices[0])
-            print("Match found!")
-            return
         else:
             print("Search didn't work")
-
-def extract_params(template_pattern, input_str):
-    lookup = {}
-    next_param_count = 1
-    params = []
-
-    split_template_pattern = template_pattern.split()
-    split_input_str = input_str.split()
-
-    print(split_template_pattern)
-    print(split_input_str)
-
-    for i in range(len(split_template_pattern)):
-        if re.search(f'<{next_param_count}>'):
-            # before_word = split_template_pattern[i-1] if i > 0 else ""
-            # after_word = split_template_pattern[i-1] if i < len(split_template_pattern) else ""
-            lookup[next_param_count] = i
-            next_param_count += 1
-
-    if len(split_template_pattern) == len(split_input_str):
-        for i in lookup.keys():
-            params.append(split_input_str[lookup[i]])
-
-        print(params)
-    else:
-        print("Slice not same size as pattern")

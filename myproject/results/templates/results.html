@@ -28,6 +28,11 @@
         <{{forloop.counter}}> {{ p }},
     {% endif %}
 {% endfor %}
+<br>
+with tags
+{% for t in tags %}
+    {{ t }}
+{% endfor %}
 
 {% block explanation %}
 {% endblock explanation %}

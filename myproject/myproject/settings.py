@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Add the results application
-    'results.apps.ResultsConfig'
+    'results.apps.ResultsConfig',
+    # Tagging
+    'taggit'
 ]
 
 MIDDLEWARE = [
