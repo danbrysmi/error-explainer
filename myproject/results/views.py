@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import ErrorTemplate, ErrorType
 from results.forms import SubmitErrorForm
+from .tips import tip_list
 import re
 
 # Create your views here.
@@ -66,6 +67,8 @@ def solve(request):
     print(result)
     print(params)
     tags = list(temp.tags.names())
+    tags.extend(params)
+    relevant_tips = [tip for tip in tip_list if not set(tags).isdisjoint(tip['tags'])]
 
     context = {
         'num_templates': num_templates,
@@ -74,7 +77,8 @@ def solve(request):
         'error_type': main_error,
         'error_template': temp,
         'params': params,
-        'tags' : tags
+        'tags' : tags,
+        'tips' : relevant_tips
     }
     return render(request, 'results.html', context=context)
 

@@ -12,7 +12,7 @@
 
   <h2>Trace</h2>
   <div id=code-view>
-  <p>{{ error_trace}}</p>
+  <p class="error_trace">{{ error_trace}}</p>
   </div>
 
   <h4>It looks like your type of error was a {{error_type}}.</h4>
@@ -33,7 +33,29 @@ with tags
 {% for t in tags %}
     {{ t }}
 {% endfor %}
+<br>
 
-{% block explanation %}
-{% endblock explanation %}
+<div style="display: flex; flex-direction: row; flex-wrap: wrap">
+
+    {% for tip in tips %}
+    {#  Single Card Template:#}
+      <div class="card" style="width: 18rem; margin: 10px">
+        <div class="card-body">
+          <div style="display: flex; flex-direction: row">
+            <h5 class="card-title">{{ tip.name }}</h5>
+            <!-- {#  Colored cirlce:#}
+            <div style="
+              background: red;
+              width: 20px;
+              height: 20px;
+              margin-left: 10px;
+              border-radius: 50%;
+            "></div> -->
+          </div>
+          <p class="card-text">{{ tip.description}}</p>
+          <a href= {{tip.link}} class="btn btn-primary">Help</a>
+        </div>
+      </div>
+      {% endfor %}
+ </div>
 {% endblock content %}
