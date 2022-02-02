@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import ErrorTemplate, ErrorType
 from results.forms import SubmitErrorForm
 from .tips import tip_list
-import re
+import re, os
 
 # Create your views here.
 def error_guide(error_name):
@@ -73,6 +73,13 @@ def solve(request):
     tags.extend([p.lower() for p in params])
     relevant_tips = [tip for tip in tip_list if not set(tags).isdisjoint(tip['tags'])]
 
+    examples = []
+    for tag in tags:
+        example = extract_example(tag)
+        if example:
+            examples.append(example)
+
+    #example =
     context = {
         'num_templates': num_templates,
         'num_types': num_types,
@@ -81,7 +88,8 @@ def solve(request):
         'error_template': temp,
         'params': params,
         'tags' : tags,
-        'tips' : relevant_tips
+        'tips' : relevant_tips,
+        'examples' : examples
     }
     return render(request, 'results.html', context=context)
 
@@ -113,3 +121,36 @@ def match_template(error_trace, etype):
             print("Search didn't work")
     unknown_trace = ErrorTemplate.objects.filter(template="Error not found").first()
     return unknown_trace, []
+
+def extract_example(param):
+    here = os.path.dirname(os.path.abspath(__file__))
+    filename = os.path.join(here, 'examples.py')
+    f = open(filename, 'r')
+    f_list = f.readlines()
+
+    tag_found = False
+    end_tag = False
+    c = 1
+    #print(len(f_list))
+    example_text = ""
+
+    while not (tag_found and end_tag) and c < len(f_list):
+        #print(f"{c} {f_list[c]}", end="")
+        if not tag_found:
+            if f_list[c-1] == "## " + param + "\n":
+                print("Start tag found!")
+                tag_found = True
+            else:
+                example_text += f_list[c-1]
+        elif not end_tag:
+            if len(f_list[c-1]) > 1 and f_list[c-1][0:2] == "##":
+                print("Next tag found!")
+                end_tag = True
+            else:
+                example_text += f_list[c-1]
+        c += 1
+
+    if c >= len(f_list):
+        return False
+
+    return example_text

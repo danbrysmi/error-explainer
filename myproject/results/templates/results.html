@@ -19,10 +19,13 @@
   <h4>Template:</h4>
   <br>
   <h5>{{error_template}}</h5>
-
-  <pre><code class="python">print("Score: " + 1)</code></pre>
+  Examples<br>
+  {% for ex in examples %}
+  <pre><code class="python">{{ ex }}</code></pre>
   <br>
-  
+{% endfor %}
+
+
   with parameters
   {% for p in params %}
     {% if forloop.last %}
