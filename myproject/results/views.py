@@ -61,13 +61,16 @@ def solve(request):
     print(main_error)
     result = match_template(error_trace, main_error)
 
-    params = result[1]
+    if result[1]:
+        params = result[1]
+    else:
+        params = []
     temp = result[0]
 
-    print(result)
-    print(params)
+    #print(result)
+    #print(params)
     tags = list(temp.tags.names())
-    tags.extend(params)
+    tags.extend([p.lower() for p in params])
     relevant_tips = [tip for tip in tip_list if not set(tags).isdisjoint(tip['tags'])]
 
     context = {
@@ -90,15 +93,20 @@ def match_template(error_trace, etype):
     for e in templates:
         # make sure regex characters are escaped before replacing
         pattern_str = re.escape(e.template)
+        print(pattern_str)
         # replace <n> with wildcard
         pattern_str = re.sub("<.*?>", "'(.*?)'", pattern_str)
+        print(pattern_str)
 
         # match wildcards to params
         if re.search(pattern_str, error_trace):
             trace_slices = re.findall(pattern_str, error_trace)
+            print(trace_slices)
             # return empty params if no wildcard matching
             if trace_slices == []:
                 return e, []
+            elif isinstance(trace_slices[0], str):
+                return e, False
             # need index 0 as trace_slices = [(param1, param2)]
             return e, trace_slices[0]
         else:

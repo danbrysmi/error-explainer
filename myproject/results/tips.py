@@ -36,7 +36,7 @@ tip_list = [
     },
     {
         "id" : 6,
-        "tags" : ['none'],
+        "tags" : ['nonetype'],
         "name" : "None Values",
         "description" : "This value is most commonly seen when a function doesn't return anything. Often errors involving None happen because you are trying to think that you variable is another type, but its actually a None",
         "link" : "https://www.w3schools.com/python/ref_keyword_none.asp"
