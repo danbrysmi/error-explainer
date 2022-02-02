@@ -73,6 +73,7 @@ def solve(request):
     tags.extend([p.lower() for p in params])
     relevant_tips = [tip for tip in tip_list if not set(tags).isdisjoint(tip['tags'])]
 
+    # extract examples from examples.py based on tags
     examples = []
     for tag in tags:
         example = extract_example(tag)
@@ -123,6 +124,7 @@ def match_template(error_trace, etype):
     return unknown_trace, []
 
 def extract_example(param):
+    # use absolute path
     here = os.path.dirname(os.path.abspath(__file__))
     filename = os.path.join(here, 'examples.py')
     f = open(filename, 'r')
@@ -134,6 +136,7 @@ def extract_example(param):
     #print(len(f_list))
     example_text = ""
 
+    # gather the text from .py file from param tag to the next tag (denoted by ##)
     while not (tag_found and end_tag) and c < len(f_list):
         #print(f"{c} {f_list[c]}", end="")
         if not tag_found:
@@ -150,6 +153,7 @@ def extract_example(param):
                 example_text += f_list[c-1]
         c += 1
 
+    # False if tag section was not located
     if c >= len(f_list):
         return False
 
