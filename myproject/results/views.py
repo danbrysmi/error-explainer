@@ -56,7 +56,7 @@ def solve(request):
     num_types = ErrorType.objects.all().count()
 
     if len(main_error) == 0:
-        main_error = ['Unknown']
+        main_error = ErrorType.objects.filter(name="Unknown")
     main_error = main_error[0]
     print(main_error)
     result = match_template(error_trace, main_error)
@@ -103,3 +103,5 @@ def match_template(error_trace, etype):
             return e, trace_slices[0]
         else:
             print("Search didn't work")
+    unknown_trace = ErrorTemplate.objects.filter(template="Error not found").first()
+    return unknown_trace, []
