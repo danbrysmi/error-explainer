@@ -76,6 +76,7 @@ def solve(request):
     # extract examples from examples.py based on tags
     examples = []
     for tag in tags:
+        print(tag)
         example = extract_example(tag)
         if example:
             examples.append(example)
@@ -132,7 +133,7 @@ def extract_example(param):
 
     tag_found = False
     end_tag = False
-    c = 1
+    c = 0
     #print(len(f_list))
     example_text = ""
 
@@ -140,21 +141,21 @@ def extract_example(param):
     while not (tag_found and end_tag) and c < len(f_list):
         #print(f"{c} {f_list[c]}", end="")
         if not tag_found:
-            if f_list[c-1] == "## " + param + "\n":
+            if f_list[c] == "## " + param + "\n":
                 print("Start tag found!")
                 tag_found = True
-            else:
-                example_text += f_list[c-1]
+            #else:
+                #example_text += f_list[c]
         elif not end_tag:
-            if len(f_list[c-1]) > 1 and f_list[c-1][0:2] == "##":
+            if len(f_list[c]) > 1 and f_list[c][0:2] == "##":
                 print("Next tag found!")
                 end_tag = True
             else:
-                example_text += f_list[c-1]
+                example_text += f_list[c]
         c += 1
 
-    # False if tag section was not located
-    if c >= len(f_list):
+    # False if tag section was not located or end tag not found
+    if not tag_found or not end_tag:
         return False
 
     return example_text
