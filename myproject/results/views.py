@@ -142,13 +142,12 @@ def extract_example(param):
         #print(f"{c} {f_list[c]}", end="")
         if not tag_found:
             if f_list[c] == "## " + param + "\n":
-                print("Start tag found!")
+                #print("Start tag found!")
                 tag_found = True
-            #else:
-                #example_text += f_list[c]
+
         elif not end_tag:
             if len(f_list[c]) > 1 and f_list[c][0:2] == "##":
-                print("Next tag found!")
+                #print("Next tag found!")
                 end_tag = True
             else:
                 example_text += f_list[c]

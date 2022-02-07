@@ -1,3 +1,6 @@
+## testcase
+# this is a test
+print("Eggs")
 ## typeerror
 print(1 + "A")
 #>>> TypeError: unsupported operand type(s) for +: 'int' and 'str'
