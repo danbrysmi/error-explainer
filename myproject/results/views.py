@@ -58,7 +58,8 @@ def solve(request):
     if len(main_error) == 0:
         main_error = ErrorType.objects.filter(name="Unknown")
     main_error = main_error[0]
-    print(main_error)
+    print(f"Main Error {main_error}")
+    print(f"Type: {type(main_error)}")
     result = match_template(error_trace, main_error)
 
     if result[1]:
@@ -76,7 +77,7 @@ def solve(request):
     # extract examples from examples.py based on tags
     examples = []
     for tag in tags:
-        print(tag)
+        #print(tag)
         example = extract_example(tag)
         if example:
             examples.append(example)
