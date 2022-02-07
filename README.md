@@ -2,10 +2,9 @@
 ## Dan Bryan-Smith's 3rd Year Project
 
 ### To-Do:
-    - Look into cpython to gather more error traces
+    - Look into cpython to gather more error traces and create examples if applicable
     - Add traces based on the common errors from Digital People Doc
     - Add more tests
-    - Provide example solutions for templates
     - Improve explanation panels
     - Improve website styling
     - Add trace highlighting from hovering over panels
@@ -16,6 +15,7 @@
     - Presents the user with the correct template, along with the parameters and tags
     - Each tag is associated to a help panel (bootstrap card)
     - Panels give help text and link to more resources (currently w3schools)
+    - Selected tags provide python example solutions
 
 ### Running the server
 `cd myproject/` (so you are in the same directory as manage.py)<br>
