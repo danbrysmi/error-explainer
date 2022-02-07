@@ -8,6 +8,7 @@
     - Improve explanation panels
     - Improve website styling
     - Add trace highlighting from hovering over panels
+    - More extensive reads of traceback (i.e. analyising the python itself as well as just final error line
 
 ### Current Features:
     - Form that takes in text input for their error trace
@@ -24,6 +25,9 @@
 ### Stopping the server
 `Ctrl + Break`<br>
 (there is no Break button on my laptop so I use a Virtual Keyboard - Ctrl + Pause does the same thing)
+
+### Running Tests
+`python manage.py test results`
 
 ### Database Migrations 
 (need to do this whenever the database structure changes including removal and additions of whole models and individual fields)
