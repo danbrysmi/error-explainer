@@ -29,7 +29,12 @@
 ### Running Tests
 `python manage.py test results`
 
-### Database Migrations 
+### Finding Error Messages in CPython
+Example: `PyErr_SetString(PyExc_IndexError, "index out of range");`
+So you can search the [repo](https://github.com/python/cpython) for `PyErr_SetString`
+
+[Useful Info](https://github.com/python/cpython/blob/main/Doc/extending/extending.rst)
+### Database Migrations
 (need to do this whenever the database structure changes including removal and additions of whole models and individual fields)
 `python3 manage.py makemigrations`<br>
 `python3 manage.py migrate`
@@ -40,5 +45,3 @@
     - Backup any templates and error types that you want to use
     - then DELETE THE MIGRATIONS so it doesn't try to remember the last one
     - you also have to create a new admin account
-
-
