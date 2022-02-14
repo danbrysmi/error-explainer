@@ -17,6 +17,7 @@
     - Each tag is associated to a help panel (bootstrap card)
     - Panels give help text and link to more resources (currently w3schools)
     - Selected tags provide python example solutions
+    - Different parts of the traceback are highlighted depending on type (header, frame summary, exception etc)
 
 ### Report Progress (Draft /#1)
     - Abstract (Done!)
