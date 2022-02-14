@@ -4,23 +4,48 @@
     list-style: none;
     background: #ddd
 }
-.error-HEAD {
-  background-color: #123456;
-}
-.error-FSUM {
-  background-color: #234567;
-}
-.error-FSL {
-  background-color: #345678;
-}
-.error-EXC {
-  background-color: #456789;
-}
 
 #code-view p {
   background: #FFD43B;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS */
-  width: 50%;
+  width: 70%;
+}
+
+.error-HEAD {
+  background: #A7E4B9;
+  white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7E4B9 */
+  width: 80%;
+}
+.error-FSUM {
+  background: #E4A7D3;
+  white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4A7D3 */
+  width: 80%;
+}
+.error-FSL {
+  background: #A7B4E4;
+  white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7B4E4 */
+  width: 80%;
+}
+.error-EXC {
+  background: #E4D7A7;
+  white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4D7A7 */
+  width: 80%;
+}
+
+.error-HEAD:hover {
+  background: #3BFF72;
+}
+
+.error-FSUM:hover {
+  background: #FF3BC8;
+}
+
+.error-FSL:hover {
+  background: #3B66FF;
+}
+
+.error-EXC:hover {
+  background: #FFD43B;
 }
 
 textarea {
