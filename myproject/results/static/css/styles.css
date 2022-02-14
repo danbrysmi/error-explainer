@@ -4,12 +4,25 @@
     list-style: none;
     background: #ddd
 }
+.error-HEAD {
+  background-color: #123456;
+}
+.error-FSUM {
+  background-color: #234567;
+}
+.error-FSL {
+  background-color: #345678;
+}
+.error-EXC {
+  background-color: #456789;
+}
 
 #code-view p {
   background: #FFD43B;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS */
   width: 50%;
 }
+
 textarea {
   width: 100%;
 }

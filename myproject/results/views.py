@@ -42,6 +42,7 @@ def index(request):
 def solve(request):
     """View function for presenting answers to the error trace."""
     error_trace = request.GET['error_trace']
+    print(error_trace)
     # NLTK CODE GOES HERE
     no_punct = re.sub(r'[^\w\s]','',error_trace)
     error_trace_list = no_punct.split()
@@ -60,7 +61,7 @@ def solve(request):
     main_error = main_error[0]
     print(f"Main Error {main_error}")
     print(f"Type: {type(main_error)}")
-    result = match_template(error_trace, main_error)
+    result = match_template(error_trace)
 
     if result[1]:
         params = result[1]
@@ -82,7 +83,8 @@ def solve(request):
         if example:
             examples.append(example)
 
-    #example =
+    lines = trace_hierarchy(error_trace)
+
     context = {
         'num_templates': num_templates,
         'num_types': num_types,
@@ -92,14 +94,16 @@ def solve(request):
         'params': params,
         'tags' : tags,
         'tips' : relevant_tips,
-        'examples' : examples
+        'examples' : examples,
+        'lines' : lines
     }
     return render(request, 'results.html', context=context)
 
-def match_template(error_trace, etype):
+def match_template(error_trace):
+#def match_template(error_trace, etype):
     """Method to find a error trace from the user input"""
-    e_type = get_object_or_404(ErrorType, name=etype)
-    templates = ErrorTemplate.objects.all().filter(error_type = e_type)
+    #e_type = get_object_or_404(ErrorType, name=etype)
+    templates = ErrorTemplate.objects.all()#.filter(error_type = e_type)
     print(f"{len(templates)} templates found")
     for e in templates:
         # make sure regex characters are escaped before replacing
@@ -126,6 +130,26 @@ def match_template(error_trace, etype):
             print("Search didn't work")
     unknown_trace = ErrorTemplate.objects.filter(template="Error not found").first()
     return unknown_trace, []
+
+def trace_hierarchy(trace):
+    tracelines = trace.split("\n")
+    lines = []
+    print(tracelines)
+    for line in tracelines:
+        if re.search(re.escape('Traceback (most recent call last):'), line):
+            lines.append([line, 'HEAD'])
+        elif len(line) > 5 and re.search(re.escape("  File"), line[0:6]):
+            lines.append([line, 'FSUM'])
+        elif match_template(line)[0].template != "Error not found":
+            lines.append([line, 'EXC'])
+        else:
+            if len(ErrorType.objects.filter(name=line)) > 0:
+                lines.append([line, 'EXC'])
+            else:
+                lines.append([line, 'FSL'])
+    for i in lines:
+        print(i)
+    return lines
 
 def extract_example(param):
     # use absolute path
