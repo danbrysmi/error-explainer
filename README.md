@@ -8,7 +8,7 @@
     - Improve explanation panels
     - Improve website styling
     - Add trace highlighting from hovering over panels
-    - More extensive reads of traceback (i.e. analyising the python itself as well as just final error line
+    - More extensive reads of traceback (i.e. analysing the python itself as well as just final error line
 
 ### Current Features:
     - Form that takes in text input for their error trace
@@ -17,6 +17,15 @@
     - Each tag is associated to a help panel (bootstrap card)
     - Panels give help text and link to more resources (currently w3schools)
     - Selected tags provide python example solutions
+
+### Report Progress (Draft /#1)
+    - Abstract (Done!)
+    - Introduction (In Progress...)
+    - Background (In Progress...)
+    - Design (Not done yet.)
+    - Development (Not done yet.)
+    - Feedback & Improvements (Not done yet.)
+    - Conclusion (Not done yet.)
 
 ### Running the server
 `cd myproject/` (so you are in the same directory as manage.py)<br>
@@ -33,7 +42,7 @@
 Example: `PyErr_SetString(PyExc_IndexError, "index out of range");`
 So you can search the [repo](https://github.com/python/cpython) for `PyErr_SetString`
 
-[Useful Info](https://github.com/python/cpython/blob/main/Doc/extending/extending.rst)
+Here is some [Useful Info](https://github.com/python/cpython/blob/main/Doc/extending/extending.rst) about Exceptions found on the cpython repo.
 ### Database Migrations
 (need to do this whenever the database structure changes including removal and additions of whole models and individual fields)
 `python3 manage.py makemigrations`<br>

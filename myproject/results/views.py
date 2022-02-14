@@ -104,20 +104,22 @@ def match_template(error_trace, etype):
     for e in templates:
         # make sure regex characters are escaped before replacing
         pattern_str = re.escape(e.template)
-        print(pattern_str)
+        #print(pattern_str)
         # replace <n> with wildcard
         pattern_str = re.sub("<.*?>", "'(.*?)'", pattern_str)
-        print(pattern_str)
+        #print(pattern_str)
 
         # match wildcards to params
         if re.search(pattern_str, error_trace):
             trace_slices = re.findall(pattern_str, error_trace)
+            print("slice")
             print(trace_slices)
             # return empty params if no wildcard matching
             if trace_slices == []:
                 return e, []
+            # return list of single item if single item
             elif isinstance(trace_slices[0], str):
-                return e, False
+                return e, [trace_slices[0]]
             # need index 0 as trace_slices = [(param1, param2)]
             return e, trace_slices[0]
         else:
