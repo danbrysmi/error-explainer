@@ -7,8 +7,6 @@
     - Add more tests
     - Improve explanation panels
     - Improve website styling
-    - Add trace highlighting from hovering over panels
-    - More extensive reads of traceback (i.e. analysing the python itself as well as just final error line
 
 ### Current Features:
     - Form that takes in text input for their error trace
@@ -18,6 +16,7 @@
     - Panels give help text and link to more resources (currently w3schools)
     - Selected tags provide python example solutions
     - Different parts of the traceback are highlighted depending on type (header, frame summary, exception etc)
+    - Some CSS transitions have been added
 
 ### Report Progress (Draft /#1)
     - Abstract (Done!)
