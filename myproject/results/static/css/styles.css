@@ -13,40 +13,45 @@
 
 .error-HEAD {
   position: relative;
-  background: #A7E4B9;
+  background: #EBFFF1;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7E4B9 */
   width: 70%;
-  transition: left ease 0.75s;
+  transition: left ease 0.5s;
   left: 0;
+  padding-left: 25px;
 }
 .error-FSUM {
   position: relative;
-  background: #E4A7D3;
+  background: #FFEBF9;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4A7D3 */
   width: 70%;
-  transition: left ease 0.75s;
+  transition: left ease 0.5s;
   left: 0;
+  padding-left: 25px;
 }
 .error-FSL {
   position: relative;
-  background: #A7B4E4;
+  background: #EBEFFF;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7B4E4 */
   width: 70%;
-  transition: left ease 0.75s;
+  transition: left ease 0.5s;
   left: 0;
+  padding-left: 25px;
 }
 .error-EXC {
   position: relative;
-  background: #E4D7A7;
+  background: #FFFBEB;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4D7A7 */
   width: 70%;
-  transition: left ease 0.75s;
+  transition: left ease 0.5s;
   left: 0;
+  padding-left: 25px;
 }
 
 .error-HEAD:hover {
   background: #3BFF72;
-  left: -45px;
+  left: -45px;q
+  padding-left: 25px;
 }
 
 .error-FSUM:hover {

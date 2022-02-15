@@ -33,32 +33,10 @@
 </div>
 {% endcomment %}
 <br>
-{% if error_type.name == "Unknown" %}
-    <h4>Looks like we couldn't find your error :(</h4>
-{% else %}
-    <h4>It looks like your type of error was a {{error_type}}.</h4>
-    <h4>Template:</h4>
-    <h5>{{error_template}}</h5>
-
-    Examples<br>
-    {% for ex in examples %}
-        <pre><code class="python">{{ ex }}</code></pre>
-        <br>
-    {% endfor %}
-
-    with parameters:<br>
-    {% for p in params %}
-        {{ p }}<br>
-    {% endfor %}
-    <br>
-    with tags:<br>
-    {% for t in tags %}
-        {{ t }}<br>
-    {% endfor %}
-    <br>
-{% endif %}
-
-
+<h4>Examples</h4>
+{% for ex in examples %}
+    <pre><code class="python">{{ ex }}</code></pre>
+{% endfor %}
 <div style="display: flex; flex-direction: row; flex-wrap: wrap">
 
     {% for tip in tips %}
@@ -82,4 +60,23 @@
       </div>
       {% endfor %}
  </div>
+ {% if error_type.name == "Unknown" %}
+     <h4>Looks like we couldn't find your error :(</h4>
+ {% else %}
+     <h4>It looks like your type of error was a {{error_type}}.</h4>
+     <h4>Template:</h4>
+     <h5>{{error_template}}</h5>
+
+     with parameters:<br>
+     {% for p in params %}
+         {{ p }}<br>
+     {% endfor %}
+     <br>
+     with tags:<br>
+     {% for t in tags %}
+         {{ t }}<br>
+     {% endfor %}
+     <br>
+ {% endif %}
+
 {% endblock content %}
