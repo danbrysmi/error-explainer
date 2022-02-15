@@ -36,6 +36,8 @@
 `Ctrl + Break`<br>
 (there is no Break button on my laptop so I use a Virtual Keyboard - Ctrl + Pause does the same thing)
 
+### CSS not working?
+It might be because Chrome is keeping your old stuff cached. Fix it by refreshing with `Ctrl + F5`
 ### Running Tests
 `python manage.py test results`
 
