@@ -27,16 +27,17 @@
     {% endif %}
 {% endfor %}
 </div>
-
+{% comment %}
 <div id="code-view">
 <p class="error_trace">{{ error_trace}}</p>
 </div>
+{% endcomment %}
+<br>
 {% if error_type.name == "Unknown" %}
     <h4>Looks like we couldn't find your error :(</h4>
 {% else %}
     <h4>It looks like your type of error was a {{error_type}}.</h4>
     <h4>Template:</h4>
-    <br>
     <h5>{{error_template}}</h5>
 
     Examples<br>

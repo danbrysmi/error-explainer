@@ -12,45 +12,61 @@
 }
 
 .error-HEAD {
+  position: relative;
   background: #A7E4B9;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7E4B9 */
-  width: 80%;
+  width: 70%;
+  transition: left ease 0.75s;
+  left: 0;
 }
 .error-FSUM {
+  position: relative;
   background: #E4A7D3;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4A7D3 */
-  width: 80%;
+  width: 70%;
+  transition: left ease 0.75s;
+  left: 0;
 }
 .error-FSL {
+  position: relative;
   background: #A7B4E4;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7B4E4 */
-  width: 80%;
+  width: 70%;
+  transition: left ease 0.75s;
+  left: 0;
 }
 .error-EXC {
+  position: relative;
   background: #E4D7A7;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4D7A7 */
-  width: 80%;
+  width: 70%;
+  transition: left ease 0.75s;
+  left: 0;
 }
 
 .error-HEAD:hover {
   background: #3BFF72;
+  left: -45px;
 }
 
 .error-FSUM:hover {
   background: #FF3BC8;
+  left: -45px;
 }
 
 .error-FSL:hover {
   background: #3B66FF;
+  left: -45px;
 }
 
 .error-EXC:hover {
   background: #FFD43B;
+  left: -45px;
 }
 
 textarea {
   width: 100%;
 }
 h1 {
-    color: #00FF00
+    color: #000
 }
