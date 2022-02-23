@@ -5,6 +5,15 @@
     background: #ddd
 }
 
+@font-face {
+    font-family: 'monofonto';
+    src: url('/static/fonts/monofonto.otf') format('opentype');
+}
+@font-face {
+    font-family: 'inconsolata';
+    src: url('/static/fonts/Inconsolata-Regular.ttf') format('truetype');
+}
+
 #code-view p {
   background: #FFD43B;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS */
@@ -16,7 +25,7 @@
   background: #EBFFF1;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7E4B9 */
   width: 70%;
-  transition: left ease 0.5s;
+  transition: all ease-in-out 0.5s;
   left: 0;
   padding-left: 25px;
 }
@@ -25,7 +34,7 @@
   background: #FFEBF9;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4A7D3 */
   width: 70%;
-  transition: left ease 0.5s;
+  transition: all ease-in-out 0.5s;
   left: 0;
   padding-left: 25px;
 }
@@ -34,7 +43,7 @@
   background: #EBEFFF;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7B4E4 */
   width: 70%;
-  transition: left ease 0.5s;
+  transition: all ease-in-out 0.5s;
   left: 0;
   padding-left: 25px;
 }
@@ -43,7 +52,7 @@
   background: #FFFBEB;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4D7A7 */
   width: 70%;
-  transition: left ease 0.5s;
+  transition: all ease-in-out 0.5s;
   left: 0;
   padding-left: 25px;
 }
@@ -73,5 +82,12 @@ textarea {
   width: 100%;
 }
 h1 {
-    color: #000
+    color: #000;
+    font-family: Monofonto;
+}
+
+.title {
+    background: #0059B1;
+    text-align: center;
+    padding: 25px;
 }

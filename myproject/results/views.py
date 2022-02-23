@@ -104,7 +104,7 @@ def match_template(error_trace):
     """Method to find a error trace from the user input"""
     #e_type = get_object_or_404(ErrorType, name=etype)
     templates = ErrorTemplate.objects.all()#.filter(error_type = e_type)
-    print(f"{len(templates)} templates found")
+    #print(f"{len(templates)} templates found")
     for e in templates:
         # make sure regex characters are escaped before replacing
         pattern_str = re.escape(e.template)
@@ -116,8 +116,8 @@ def match_template(error_trace):
         # match wildcards to params
         if re.search(pattern_str, error_trace):
             trace_slices = re.findall(pattern_str, error_trace)
-            print("slice")
-            print(trace_slices)
+            #print("slice")
+            #print(trace_slices)
             # return empty params if no wildcard matching
             if trace_slices == []:
                 return e, []
@@ -127,28 +127,34 @@ def match_template(error_trace):
             # need index 0 as trace_slices = [(param1, param2)]
             return e, trace_slices[0]
         else:
-            print("Search didn't work")
+            pass#print("Search didn't work")
     unknown_trace = ErrorTemplate.objects.filter(template="Error not found").first()
     return unknown_trace, []
 
 def trace_hierarchy(trace):
     tracelines = trace.split("\n")
     lines = []
-    print(tracelines)
+    #print(tracelines)
     for line in tracelines:
         if re.search(re.escape('Traceback (most recent call last):'), line):
             lines.append([line, 'HEAD'])
-        elif len(line) > 5 and re.search(re.escape("  File"), line[0:6]):
-            lines.append([line, 'FSUM'])
+            print("HEAD")
+        elif re.search(' File "(.+)", line (\d+), in (.+)', line):
+            res = re.search(' File "(.+)", line (\d+), in (.+)', line)
+            lines.append([line, 'FSUM', [res.group(1), res.group(2), res.group(3)]])
+            print("FSUM")
         elif match_template(line)[0].template != "Error not found":
             lines.append([line, 'EXC'])
+            print("EXC")
         else:
             if len(ErrorType.objects.filter(name=line)) > 0:
                 lines.append([line, 'EXC'])
+                print("EXC 2")
             else:
                 lines.append([line, 'FSL'])
+                print("FSL")
     for i in lines:
-        print(i)
+        pass#print(i)
     return lines
 
 def extract_example(param):
