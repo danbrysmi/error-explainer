@@ -1,6 +1,3 @@
-def indented_block():
-    pass
-
 tip_list = [
     {
         "id" : 1,
