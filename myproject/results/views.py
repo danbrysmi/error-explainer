@@ -145,21 +145,21 @@ def trace_hierarchy(trace):
     for line in tracelines:
         if re.search(re.escape('Traceback (most recent call last):'), line):
             lines.append([line, 'HEAD'])
-            # print("HEAD")
+            # print("HEAD") # HEAD => Header i.e. Traceback Line
         elif re.search(' File "(.+)", line (\d+), in (.+)', line):
             res = re.search(' File "(.+)", line (\d+), in (.+)', line)
             lines.append([line, 'FSUM', [res.group(1), res.group(2), res.group(3)]])
-            # print("FSUM")
+            # print("FSUM") # FSUM => FrameSUMmary i.e. location info
         elif match_template(line)[0].template != "Error not found":
             lines.append([line, 'EXC'])
-            # print("EXC")
+            # print("EXC") # EXC => EXCeption i.e. template line
         else:
             if len(ErrorType.objects.filter(name=line)) > 0:
                 lines.append([line, 'EXC'])
-                # print("EXC 2")
+                # print("EXC 2") # see EXC
             else:
                 lines.append([line, 'FSL'])
-                # print("FSL")
+                # print("FSL") # FSL = FrameSummaryLine i.e. the code excerpt
     for i in lines:
         pass#print(i)
     return lines
