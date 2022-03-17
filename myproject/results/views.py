@@ -171,7 +171,7 @@ def tokenise_fsl(fsl_line):
     new_str = ""
     token_data = []
     for token in tokens:
-        if not in_str and token == '``': #nltk token for start of string
+        if not in_str and token == '``': # nltk token for start of string
             # print("String Entered")
             in_str = True
             new_str = ""
@@ -189,6 +189,10 @@ def tokenise_fsl(fsl_line):
             token_data.append(["int", token])
         else:
             token_data.append(["expression", token])
+    else:
+        if in_str: # unclosed string
+            token_data.append(["string-semi", '"' + new_str])
+
     print("="*30)
     for t in token_data:
         print(t)
