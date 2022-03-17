@@ -2,8 +2,8 @@
 ## Dan Bryan-Smith's 3rd Year Project
 
 ### To-Do:
-    - Look into cpython to gather more error traces and create examples if applicable
-    - Add traces based on the common errors from Digital People Doc
+    - Improve trace parser
+    - Link top 10 common errors to traces templates
     - Add more tests
     - Improve explanation panels
     - Improve website styling
@@ -16,13 +16,14 @@
     - Panels give help text and link to more resources (currently w3schools)
     - Selected tags provide python example solutions
     - Different parts of the traceback are highlighted based on type (header, frame summary, exception etc)
+    - Basic parsing of strings and ints from FSL lines
     - Some CSS transitions have been added
 
 ### Report Progress (Draft /#1)
     - Abstract (Done!)
-    - Introduction (In Progress...)
+    - Introduction (Done!)
     - Background (In Progress...)
-    - Design (Not done yet.)
+    - Design (In Progress...)
     - Development (Not done yet.)
     - Feedback & Improvements (Not done yet.)
     - Conclusion (Not done yet.)
