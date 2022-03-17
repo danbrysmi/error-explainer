@@ -4,6 +4,7 @@ from .models import ErrorTemplate, ErrorType
 from results.forms import SubmitErrorForm
 from .tips import tip_list
 import re, os
+from nltk.tokenize import word_tokenize
 
 # Create your views here.
 def error_guide(error_name):
@@ -42,7 +43,7 @@ def index(request):
 def solve(request):
     """View function for presenting answers to the error trace."""
     error_trace = request.GET['error_trace']
-    print(error_trace)
+    # print(error_trace)
     # NLTK CODE GOES HERE
     no_punct = re.sub(r'[^\w\s]','',error_trace)
     error_trace_list = no_punct.split()
@@ -59,8 +60,8 @@ def solve(request):
     if len(main_error) == 0:
         main_error = ErrorType.objects.filter(name="Unknown")
     main_error = main_error[0]
-    print(f"Main Error {main_error}")
-    print(f"Type: {type(main_error)}")
+    # print(f"Main Error {main_error}")
+    # print(f"Type: {type(main_error)}")
     result = match_template(error_trace)
 
     if result[1]:
@@ -84,6 +85,12 @@ def solve(request):
             examples.append(example)
 
     lines = trace_hierarchy(error_trace)
+
+    for line_id in range(len(lines)):
+        if lines[line_id][1] == 'FSL':
+            parsed_line = tokenise_fsl(lines[line_id][0])
+            lines[line_id][0] = parsed_line
+
 
     context = {
         'num_templates': num_templates,
@@ -138,24 +145,56 @@ def trace_hierarchy(trace):
     for line in tracelines:
         if re.search(re.escape('Traceback (most recent call last):'), line):
             lines.append([line, 'HEAD'])
-            print("HEAD")
+            # print("HEAD")
         elif re.search(' File "(.+)", line (\d+), in (.+)', line):
             res = re.search(' File "(.+)", line (\d+), in (.+)', line)
             lines.append([line, 'FSUM', [res.group(1), res.group(2), res.group(3)]])
-            print("FSUM")
+            # print("FSUM")
         elif match_template(line)[0].template != "Error not found":
             lines.append([line, 'EXC'])
-            print("EXC")
+            # print("EXC")
         else:
             if len(ErrorType.objects.filter(name=line)) > 0:
                 lines.append([line, 'EXC'])
-                print("EXC 2")
+                # print("EXC 2")
             else:
                 lines.append([line, 'FSL'])
-                print("FSL")
+                # print("FSL")
     for i in lines:
         pass#print(i)
     return lines
+
+def tokenise_fsl(fsl_line):
+    tokens = word_tokenize(fsl_line)
+
+    in_str = False
+    new_str = ""
+    token_data = []
+    for token in tokens:
+        if not in_str and token == '``': #nltk token for start of string
+            # print("String Entered")
+            in_str = True
+            new_str = ""
+        elif in_str and token == "''":
+            # print("String Exited")
+            in_str = False
+            token_data.append(["string", new_str])
+        elif in_str:
+            new_str += token
+        elif token in ["and", "not", "or", "+", "=", "+=", "==", ">=", "<=", ">", "<", "!="]:
+            token_data.append(["operator", token])
+        elif token in ["abs", "all", "any", "bool", "chr", "dict", "enumerate", "eval", "float", "format", "help", "hex", "id", "input", "int", "isinstance", "len", "list", "map", "max", "min", "oct", "open", "ord", "pow", "print", "range", "repr", "reversed", "round", "set", "slice", "sorted", "str", "sum", "super", "tuple", "type"]:
+            token_data.append(["built-in function", token])
+        elif token.isnumeric():
+            token_data.append(["int", token])
+        else:
+            token_data.append(["expression", token])
+    print("="*30)
+    for t in token_data:
+        print(t)
+    print("="*30)
+
+    return fsl_line
 
 def extract_example(param):
     # use absolute path
