@@ -4,7 +4,7 @@ from .models import ErrorTemplate, ErrorType
 from results.forms import SubmitErrorForm
 from .tips import tip_list
 import re, os
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import wordpunct_tokenize
 
 # Create your views here.
 def error_guide(error_name):
@@ -107,30 +107,27 @@ def solve(request):
     return render(request, 'results.html', context=context)
 
 def match_template(error_trace):
-#def match_template(error_trace, etype):
     """Method to find a error trace from the user input"""
-    #e_type = get_object_or_404(ErrorType, name=etype)
-    templates = ErrorTemplate.objects.all()#.filter(error_type = e_type)
-    #print(f"{len(templates)} templates found")
+    templates = ErrorTemplate.objects.all()
     for e in templates:
         # make sure regex characters are escaped before replacing
         pattern_str = re.escape(e.template)
-        #print(pattern_str)
+
         # replace <n> with wildcard
         pattern_str = re.sub("<.*?>", "'(.*?)'", pattern_str)
-        #print(pattern_str)
 
         # match wildcards to params
         if re.search(pattern_str, error_trace):
             trace_slices = re.findall(pattern_str, error_trace)
-            #print("slice")
-            #print(trace_slices)
+
             # return empty params if no wildcard matching
             if trace_slices == []:
                 return e, []
+
             # return list of single item if single item
             elif isinstance(trace_slices[0], str):
                 return e, [trace_slices[0]]
+
             # need index 0 as trace_slices = [(param1, param2)]
             return e, trace_slices[0]
         else:
@@ -141,7 +138,7 @@ def match_template(error_trace):
 def trace_hierarchy(trace):
     tracelines = trace.split("\n")
     lines = []
-    #print(tracelines)
+
     for line in tracelines:
         if re.search(re.escape('Traceback (most recent call last):'), line):
             lines.append([line, 'HEAD'])
@@ -160,12 +157,10 @@ def trace_hierarchy(trace):
             else:
                 lines.append([line, 'FSL'])
                 # print("FSL") # FSL = FrameSummaryLine i.e. the code excerpt
-    for i in lines:
-        pass#print(i)
     return lines
 
 def tokenise_fsl(fsl_line):
-    tokens = word_tokenize(fsl_line)
+    tokens = wordpunct_tokenize(fsl_line)
 
     in_str = False
     new_str = ""
@@ -186,7 +181,7 @@ def tokenise_fsl(fsl_line):
         elif token in ["abs", "all", "any", "bool", "chr", "dict", "enumerate", "eval", "float", "format", "help", "hex", "id", "input", "int", "isinstance", "len", "list", "map", "max", "min", "oct", "open", "ord", "pow", "print", "range", "repr", "reversed", "round", "set", "slice", "sorted", "str", "sum", "super", "tuple", "type"]:
             token_data.append(["built-in function", token])
         elif token.isnumeric():
-            token_data.append(["int", token])
+            token_data.append(["int", int(token)])
         else:
             token_data.append(["expression", token])
     else:
@@ -198,7 +193,7 @@ def tokenise_fsl(fsl_line):
         print(t)
     print("="*30)
 
-    return fsl_line
+    return token_data
 
 def extract_example(param):
     # use absolute path
