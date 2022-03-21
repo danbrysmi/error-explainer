@@ -86,15 +86,15 @@ def solve(request):
 
     lines = trace_hierarchy(error_trace)
 
-    # for line_id in range(len(lines)):
-    #     if lines[line_id][1] == 'FSL':
-    #         parsed_line = tokenise_fsl(lines[line_id][0])
-    #         lines[line_id][0] = parsed_line
+    print(f"Lines: {lines}")
 
-    # DELETE ME: TOKENISE_FSL TESTING
+    for line_id in range(len(lines)):
+        if lines[line_id][1] == 'FSL':
+            parsed_line = tokenise_fsl(lines[line_id][0])
+            lines[line_id].append(parsed_line)
 
-    data = tokenise_fsl(error_trace)
-    print(data)
+    print(f"Lines (new): {lines}")
+
 
     context = {
         'num_templates': num_templates,
@@ -164,7 +164,6 @@ def trace_hierarchy(trace):
     return lines
 
 def tokenise_fsl(fsl_line):
-    print(f"Input: {fsl_line}")
     tokens_raw = wordpunct_tokenize(fsl_line)
     print(f"Tokens (raw): {tokens_raw}")
 
@@ -176,7 +175,6 @@ def tokenise_fsl(fsl_line):
             tokens.append(token)
         else:
             tokens = tokens + list(token)
-    print(f"Tokens: {tokens}")
 
     in_str = False
     new_str = ""
@@ -221,8 +219,7 @@ def tokenise_fsl(fsl_line):
             # remove params that are commas parsed wrong
             args = list(filter(lambda a: a != ',', args))
             token_data.remove(["expression", func_name])
-            token_data.append(["function", func_name])
-            token_data.append(["params", args])
+            token_data.append(["function", {"name" : func_name, "params" : args}])
             func_name = ""
             args = []
         elif in_brackets:
@@ -235,11 +232,7 @@ def tokenise_fsl(fsl_line):
         if in_str: # unclosed string
             token_data.append(["string-semi", '"' + new_str])
 
-    # replace escape characters
-
-    # print("="*30)
-    # for t in token_data:
-    #     print(t)
+    print(f"Token Data: {token_data}")
     print("="*30)
 
     return token_data
