@@ -68,23 +68,45 @@ class TokeniseFslTestCase(TestCase):
 
     # NOTE - JUST SWITCHED TO WORDPUNCT_TOKENIZE WHICH RUINS THE TOKENISE_FSL FUNC
     def test_recognise_string(self):
+        # single quoted
         data = tokenise_fsl("'hello'")
         self.assertEqual(data, [["string", 'hello']])
 
     def test_recognise_string_double(self):
+        # double quoted
         data = tokenise_fsl('"hello"')
         self.assertEqual(data, [["string", "hello"]])
 
     def test_reconise_multiword_string(self):
+        #single quoted multi
         data = tokenise_fsl("'hello world'")
         self.assertEqual(data, [["string", 'hello world']])
+
+    def test_reconise_multiword_string_double(self):
+        #double quoted multi
+        data = tokenise_fsl('"hello world"')
+        self.assertEqual(data, [["string", "hello world"]])
+
+    # def test_escaped_single_quote(self):
+    #     # escaped '
+    #     data = tokenise_fsl("'don\'t'")
+    #     self.assertEqual(data, [["string", 'don\'t']])
 
     def test_recognise_int(self):
         data = tokenise_fsl("3")
         self.assertEqual(data, [["int", 3]])
 
     def test_recognise_function(self):
-        pass
+        data = tokenise_fsl("my_func()")
+        self.assertEqual(data, [["function", "my_func"], ["params", []]])
+
+    def test_recognise_function_1param(self):
+        data = tokenise_fsl("my_func(arg1)")
+        self.assertEqual(data, [["function", "my_func"], ["params", ["arg1"]]])
+
+    def test_recognise_function_Nparam(self):
+        data = tokenise_fsl("my_func(arg1, arg2, arg3)")
+        self.assertEqual(data, [["function", "my_func"], ["params", ["arg1", "arg2", "arg3"]]])
 
     def test_recognise_operator(self):
         data = tokenise_fsl('+')

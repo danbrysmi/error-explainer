@@ -86,11 +86,15 @@ def solve(request):
 
     lines = trace_hierarchy(error_trace)
 
-    for line_id in range(len(lines)):
-        if lines[line_id][1] == 'FSL':
-            parsed_line = tokenise_fsl(lines[line_id][0])
-            lines[line_id][0] = parsed_line
+    # for line_id in range(len(lines)):
+    #     if lines[line_id][1] == 'FSL':
+    #         parsed_line = tokenise_fsl(lines[line_id][0])
+    #         lines[line_id][0] = parsed_line
 
+    # DELETE ME: TOKENISE_FSL TESTING
+
+    data = tokenise_fsl(error_trace)
+    print(data)
 
     context = {
         'num_templates': num_templates,
@@ -160,37 +164,82 @@ def trace_hierarchy(trace):
     return lines
 
 def tokenise_fsl(fsl_line):
-    tokens = wordpunct_tokenize(fsl_line)
+    print(f"Input: {fsl_line}")
+    tokens_raw = wordpunct_tokenize(fsl_line)
+    print(f"Tokens (raw): {tokens_raw}")
+
+    char_check= re.compile('[@!#$%^&*()<>?/\|}{~:]')
+
+    tokens = []
+    for token in tokens_raw:
+        if(char_check.search(token) == None):
+            tokens.append(token)
+        else:
+            tokens = tokens + list(token)
+    print(f"Tokens: {tokens}")
 
     in_str = False
     new_str = ""
+    in_brackets = False
+    func_name = ""
+    args = []
     token_data = []
+
     for token in tokens:
-        if not in_str and token == '``': # nltk token for start of string
+        if not in_str and token == '"': # nltk token for start of string
             # print("String Entered")
-            in_str = True
+            in_str = "double"
             new_str = ""
-        elif in_str and token == "''":
+        elif not in_str and token == "'":
+            in_str = "single"
+            new_str = ""
+        elif in_str == "double" and token == '"':
             # print("String Exited")
             in_str = False
             token_data.append(["string", new_str])
+        elif in_str == "single" and token == "'":
+            in_str = False
+            token_data.append(["string", new_str])
         elif in_str:
-            new_str += token
+            if len(new_str) > 0:
+                new_str += " " + token
+            else:
+                new_str += token
         elif token in ["and", "not", "or", "+", "=", "+=", "==", ">=", "<=", ">", "<", "!="]:
             token_data.append(["operator", token])
         elif token in ["abs", "all", "any", "bool", "chr", "dict", "enumerate", "eval", "float", "format", "help", "hex", "id", "input", "int", "isinstance", "len", "list", "map", "max", "min", "oct", "open", "ord", "pow", "print", "range", "repr", "reversed", "round", "set", "slice", "sorted", "str", "sum", "super", "tuple", "type"]:
             token_data.append(["built-in function", token])
+        elif token in ["if", "elif", "else", "while", "for", "break", "continue", ",match", "do"]:
+            token_data.append(["control", token])
         elif token.isnumeric():
             token_data.append(["int", int(token)])
+        elif token == "(" and token_data[-1][0] == "expression":
+            in_brackets = True
+            func_name = token_data[-1][1]
+        elif token == ")" and in_brackets:
+            in_brackets = False
+            # remove params that are commas parsed wrong
+            args = list(filter(lambda a: a != ',', args))
+            token_data.remove(["expression", func_name])
+            token_data.append(["function", func_name])
+            token_data.append(["params", args])
+            func_name = ""
+            args = []
+        elif in_brackets:
+            args.append(token)
+        elif token == ":":
+            token_data.append(["colon", token])
         else:
             token_data.append(["expression", token])
     else:
         if in_str: # unclosed string
             token_data.append(["string-semi", '"' + new_str])
 
-    print("="*30)
-    for t in token_data:
-        print(t)
+    # replace escape characters
+
+    # print("="*30)
+    # for t in token_data:
+    #     print(t)
     print("="*30)
 
     return token_data
