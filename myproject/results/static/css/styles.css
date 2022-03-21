@@ -25,58 +25,184 @@
   background: #EBFFF1;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7E4B9 */
   width: 70%;
-  transition: all ease-in-out 0.5s;
-  left: 0;
-  padding-left: 25px;
+  /* transition: all ease-in-out 0.5s; */
+  /* left: 0; */
+  /* padding-left: 25px; */
 }
 .error-FSUM {
   position: relative;
   background: #FFEBF9;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4A7D3 */
   width: 70%;
-  transition: all ease-in-out 0.5s;
-  left: 0;
-  padding-left: 25px;
+  /* transition: all ease-in-out 0.5s; */
+  /* left: 0; */
+  /* padding-left: 25px; */
 }
 .error-FSL {
   position: relative;
   background: #EBEFFF;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7B4E4 */
   width: 70%;
-  transition: all ease-in-out 0.5s;
-  left: 0;
-  padding-left: 25px;
+  /* transition: all ease-in-out 0.5s; */
+  /* left: 0; */
+  /* padding-left: 25px; */
 }
 .error-EXC {
   position: relative;
   background: #FFFBEB;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4D7A7 */
   width: 70%;
-  transition: all ease-in-out 0.5s;
-  left: 0;
-  padding-left: 25px;
+  /* transition: all ease-in-out 0.5s; */
+  /* left: 0; */
+  /* padding-left: 25px; */
 }
 
 .error-HEAD:hover {
   background: #3BFF72;
-  left: -45px;q
-  padding-left: 25px;
+  /* left: -45px;q */
+  /* padding-left: 25px; */
 }
 
 .error-FSUM:hover {
   background: #FF3BC8;
-  left: -45px;
+  /* left: -45px; */
 }
 
 .error-FSL:hover {
   background: #3B66FF;
-  left: -45px;
+  /* left: -45px; */
 }
 
 .error-EXC:hover {
   background: #FFD43B;
-  left: -45px;
+  /* left: -45px; */
 }
+
+.norm {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EEEEEE;
+  height: 100px;
+  text-align: center;
+  font-size: 40px;
+  font-family: inconsolata;
+}
+
+
+.string {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EEEEEE;
+  height: 100px;
+  text-align: center;
+  font-size: 40px;
+  font-family: inconsolata;
+}
+
+.string:hover {
+    background: #af76a5;
+}
+
+.number {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EEEEEE;
+  height: 100px;
+  text-align: center;
+  font-size: 40px;
+  font-family: inconsolata;
+}
+
+.number:hover {
+    background: #76A5AF;
+}
+
+.expression {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EEEEEE;
+  height: 100px;
+  text-align: center;
+  font-size: 40px;
+  font-family: inconsolata;
+  vertical-align: middle;
+}
+
+.expression:hover {
+    background: #DDDDDD;
+}
+
+.function {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EEEEEE;
+  height: 100px;
+  text-align: center;
+  font-size: 40px;
+  font-family: inconsolata;
+}
+
+.function:hover {
+    background: #a5af76;
+}
+
+.attribute {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EEEEEE;
+  height: 100px;
+  text-align: center;
+  font-size: 40px;
+  font-family: inconsolata;
+}
+
+.attribute:hover {
+    background: #8eaa93;
+}
+
+.control {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EEEEEE;
+  height: 100px;
+  text-align: center;
+  font-size: 40px;
+  font-family: inconsolata;
+}
+
+.control:hover {
+    background: #aa938e;
+}
+
+.operator {
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EEEEEE;
+  height: 100px;
+  font-size: 48px;
+  font-family: inconsolata;
+}
+
+.operator:hover {
+    background: #938eaa;
+}
+
 
 textarea {
   width: 100%;
@@ -90,4 +216,11 @@ h1 {
     background: #0059B1;
     text-align: center;
     padding: 25px;
+}
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
 }

@@ -227,7 +227,11 @@ def tokenise_fsl(fsl_line):
         elif token == ":":
             token_data.append(["colon", token])
         else:
-            token_data.append(["expression", token])
+            if len(token_data) > 0 and token_data[-1] == ["expression", "."]:
+                token_data.remove(["expression", "."])
+                token_data.append(["attribute", token])
+            else:
+                token_data.append(["expression", token])
     else:
         if in_str: # unclosed string
             token_data.append(["string-semi", '"' + new_str])

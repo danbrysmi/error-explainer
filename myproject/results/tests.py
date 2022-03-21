@@ -118,3 +118,7 @@ class TokeniseFslTestCase(TestCase):
 
     def test_recognise_unfinished_brackets(self):
         pass
+
+    def test_recognise_attribute(self):
+        data = tokenise_fsl('thing.name')
+        self.assertEqual(data, [["expression", "thing"], ["attribute", "name"]])
