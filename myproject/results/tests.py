@@ -94,7 +94,11 @@ class TokeniseFslTestCase(TestCase):
 
     def test_recognise_int(self):
         data = tokenise_fsl("3")
-        self.assertEqual(data, [["int", 3]])
+        self.assertEqual(data, [["int", "3"]])
+
+    def test_recognise_float(self):
+        data = tokenise_fsl("2.5")
+        self.assertEqual(data, [["float", "2.5"]])
 
     def test_recognise_function(self):
         data = tokenise_fsl("my_func()")

@@ -210,7 +210,12 @@ def tokenise_fsl(fsl_line):
         elif token in ["if", "elif", "else", "while", "for", "break", "continue", ",match", "do"]:
             token_data.append(["control", token])
         elif token.isnumeric():
-            token_data.append(["int", int(token)])
+            if len(token_data) > 1 and token_data[-1] == ["expression", "."] and token_data[-2][0] == "int":
+                n = token_data.pop(-2)
+                token_data.pop(-1)
+                token_data.append(["float", n[1] + "." + token])
+            else:
+                token_data.append(["int", token])
         elif token == "(" and token_data[-1][0] == "expression":
             in_brackets = True
             func_name = token_data[-1][1]
