@@ -2,11 +2,12 @@
 ## Dan Bryan-Smith's 3rd Year Project
 
 ### To-Do:
-    - Improve trace parser
+    - Add nested abilities for functions, brackets
     - Link top 10 common errors to traces templates
-    - Add more tests
     - Improve explanation panels
-    - Improve website styling
+    - Add Javascript function to reveal explanation on FSL breakdown hover
+    - More tests are always good!
+    - Add escape characters in parser
 
 ### Current Features:
     - Form that takes in text input for their error trace
@@ -16,8 +17,8 @@
     - Panels give help text and link to more resources (currently w3schools)
     - Selected tags provide python example solutions
     - Different parts of the traceback are highlighted based on type (header, frame summary, exception etc)
-    - Basic parsing of strings and ints from FSL lines
-    - Some CSS transitions have been added
+    - Parsing of strings, ints, floats, functions, attributes, brackets and expressions from FSL line
+    - Line number labelling from FSL's linked FSUM info
 
 ### Report Progress (Draft /#1)
     - Abstract (Done!)
