@@ -85,16 +85,19 @@ def solve(request):
             examples.append(example)
 
     lines = trace_hierarchy(error_trace)
-
+    line_nums = [0]
     print(f"Lines: {lines}")
 
     for line_id in range(len(lines)):
         if lines[line_id][1] == 'FSL':
             parsed_line = tokenise_fsl(lines[line_id][0])
             lines[line_id].append(parsed_line)
-
+        l_num = lines[line_id][2][1] if lines[line_id][1] == 'FSUM' else 0
+        line_nums.append(l_num)
+    line_nums.pop(-1)
     print(f"Lines (new): {lines}")
 
+    lines_zipped = zip(lines, line_nums)
 
     context = {
         'num_templates': num_templates,
@@ -106,7 +109,8 @@ def solve(request):
         'tags' : tags,
         'tips' : relevant_tips,
         'examples' : examples,
-        'lines' : lines
+        'lines' : lines,
+        'lines_zipped' : lines_zipped
     }
     return render(request, 'results.html', context=context)
 
@@ -166,17 +170,19 @@ def trace_hierarchy(trace):
 def tokenise_fsl(fsl_line):
     print("="*100)
     tokens_raw = wordpunct_tokenize(fsl_line)
-    print(f"Tokens (raw): {tokens_raw}")
 
-    char_check= re.compile('[@!#$%^&*()<>?/\|}{~:]')
+
+    # char_check= re.compile(re.escape('"[@!#$%^(&*<>?/\|}{~:]'))
+    # char_check2= re.compile(re.escape("'[@!#$%^(&*)<>?/\|}{~:]"))
 
     tokens = []
     for token in tokens_raw:
-        if(char_check.search(token) == None):
+        # if(char_check.search(token) == None and char_check2.search(token) == None):
+        if not all(not c.isalnum() for c in token):
             tokens.append(token)
         else:
             tokens = tokens + list(token)
-
+    print(f"Tokens (after specials): {tokens}")
     in_str = False
     new_str = ""
     in_brackets = False
@@ -185,7 +191,7 @@ def tokenise_fsl(fsl_line):
     token_data = []
 
     for token in tokens:
-        #print(f"Token Data: {token_data}")
+        print(f"Token Data: {token_data}")
         if not in_str and token == '"': # nltk token for start of string
             # print("String Entered")
             in_str = "double"
@@ -207,9 +213,9 @@ def tokenise_fsl(fsl_line):
                 new_str += token
         elif token in ["and", "not", "or", "+", "=", "+=", "==", ">=", "<=", ">", "<", "!="]:
             token_data.append(["operator", token])
-        elif token in ["abs", "all", "any", "bool", "chr", "dict", "enumerate", "eval", "float", "format", "help", "hex", "id", "input", "int", "isinstance", "len", "list", "map", "max", "min", "oct", "open", "ord", "pow", "print", "range", "repr", "reversed", "round", "set", "slice", "sorted", "str", "sum", "super", "tuple", "type"]:
-            token_data.append(["built-in function", token])
-        elif token in ["if", "elif", "else", "while", "for", "break", "continue", "match"]:
+        # elif token in ["abs", "all", "any", "bool", "chr", "dict", "enumerate", "eval", "float", "format", "help", "hex", "id", "input", "int", "isinstance", "len", "list", "map", "max", "min", "oct", "open", "ord", "pow", "print", "range", "repr", "reversed", "round", "set", "slice", "sorted", "str", "sum", "super", "tuple", "type"]:
+        #     token_data.append(["built-in function", token])
+        elif token in ["if", "elif", "else", "while", "for", "break", "continue", "return", "match"]:
             token_data.append(["control", token])
         elif token.isnumeric():
             if len(token_data) > 1 and token_data[-1] == ["expression", "."] and token_data[-2][0] == "int":
@@ -221,19 +227,25 @@ def tokenise_fsl(fsl_line):
                 token_data.append(["float", "0." + token])
             else:
                 token_data.append(["int", token])
-        elif token == "(" and token_data[-1][0] == "expression":
+        elif token == "(":
             in_brackets = True
-            func_name = token_data[-1][1]
+            token_data.append(["bracket_start", "("])
         elif token == ")" and in_brackets:
             in_brackets = False
-            # remove params that are commas parsed wrong
-            args = list(filter(lambda a: a != ',', args))
-            token_data.remove(["expression", func_name])
-            token_data.append(["function", {"name" : func_name, "params" : args}])
-            func_name = ""
-            args = []
-        elif in_brackets:
-            args.append(token)
+            token_data.append(["bracket_end", ")"])
+            #lbi = last bracket index
+            lbi = len(token_data) - 1 - token_data[::-1].index(["bracket_start", "("])
+            token_data.append(["brackets", ["items", token_data[lbi+1:-1]]])
+            del token_data[lbi:-1]
+            if len(token_data) > 1 and token_data[-2][0] == "expression":
+                func_name = token_data[-2][1]
+                args = token_data[-1][1][1]
+                # remove params that are commas parsed wrong
+                args = list(filter(lambda a: a != ["expression", ','], args))
+                del token_data[-2:]
+                token_data.append(["function", {"name" : func_name, "params" : args}])
+                func_name = ""
+                args = []
         elif token == ":":
             token_data.append(["colon", token])
         else:

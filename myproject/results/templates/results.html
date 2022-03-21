@@ -29,9 +29,11 @@
 <br>
 <br>
 </div>
-<div class="flex-container">
-{% for line in lines %}
+
+{% for line, l_num in lines_zipped %}
     {% if line.1 == 'FSL' %}
+    <h3>Line {{l_num}}</h3>
+    <div class="flex-container">
         {% for item in line.2 %}
             {% if item.0 == 'expression' %}
             <div class="flex-child">
@@ -67,13 +69,14 @@
             </div>
             {% endif %}
         {% endfor %}
+        </div>
     {% endif %}
 {% endfor %}
-</div>
 
-<div class="stringdesc">
-    <div class="string">"{{ item.1 }}"</div>
-</div>
+
+<!-- <div class="stringdesc">
+    <div class="string">"This is a string."</div>
+</div> -->
 <!-- <div id="code-view">
 <p class="error_trace">{{ error_trace}}</p>
 </div> -->

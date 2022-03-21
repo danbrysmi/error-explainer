@@ -82,7 +82,7 @@
     display: none;
 }
 
-.flex-container:hover .string:hover~.stringdesc{
+.flex-container:hover ~ .stringdesc {
     display: block;
 }
 

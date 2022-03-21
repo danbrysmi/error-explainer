@@ -110,11 +110,11 @@ class TokeniseFslTestCase(TestCase):
 
     def test_recognise_function_1param(self):
         data = tokenise_fsl("my_func(arg1)")
-        self.assertEqual(data, [["function", {"name" : "my_func", "params" : ["arg1"]}]])
+        self.assertEqual(data, [["function", {"name" : "my_func", "params" : [["expression", "arg1"]]}]])
 
     def test_recognise_function_Nparam(self):
         data = tokenise_fsl("my_func(arg1, arg2, arg3)")
-        self.assertEqual(data, [["function", {"name" : "my_func", "params" : ["arg1", "arg2", "arg3"]}]])
+        self.assertEqual(data, [["function", {"name" : "my_func", "params" : [["expression", "arg1"], ["expression", "arg2"], ["expression", "arg3"]]}]])
 
     def test_recognise_operator(self):
         data = tokenise_fsl('+')
