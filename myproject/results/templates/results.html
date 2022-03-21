@@ -35,39 +35,25 @@
     <h3>Line {{l_num}}</h3>
     <div class="flex-container">
         {% for item in line.2 %}
+            <div class="flex-child">
             {% if item.0 == 'expression' %}
-            <div class="flex-child">
-                <div class="expression">{{ item.1 }}</div>
-            </div>
+                <div class="expression" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Not quite sure what this is. Probably a variable of some sort.">{{ item.1 }}</div>
             {% elif item.0 == 'string' %}
-            <div class="flex-child">
                 <div class="string">"{{ item.1 }}"</div>
-            </div>
             {% elif item.0 == 'int' %}
-            <div class="flex-child">
                 <div class="number">{{ item.1 }}</div>
-            </div>
             {% elif item.0 == 'float' %}
-            <div class="flex-child">
                 <div class="number">{{ item.1 }}</div>
-            </div>
             {% elif item.0 == 'function' %}
-            <div class="flex-child">
                 <div class="function">{{ item.1.name }}({{ item.1.params|join:", " }})</div>
-            </div>
             {% elif item.0 == 'attribute' %}
-            <div class="flex-child">
                 <div class="attribute">{{ item.1 }}</div>
-            </div>
             {% elif item.0 == 'control' %}
-            <div class="flex-child">
                 <div class="control">{{ item.1 }}</div>
-            </div>
             {% elif item.0 == 'operator' %}
-            <div class="flex-child">
                 <div class="operator">{{ item.1 }}</div>
-            </div>
             {% endif %}
+            </div>
         {% endfor %}
         </div>
     {% endif %}
