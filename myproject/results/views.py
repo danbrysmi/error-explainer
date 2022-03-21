@@ -164,6 +164,7 @@ def trace_hierarchy(trace):
     return lines
 
 def tokenise_fsl(fsl_line):
+    print("="*100)
     tokens_raw = wordpunct_tokenize(fsl_line)
     print(f"Tokens (raw): {tokens_raw}")
 
@@ -184,6 +185,7 @@ def tokenise_fsl(fsl_line):
     token_data = []
 
     for token in tokens:
+        #print(f"Token Data: {token_data}")
         if not in_str and token == '"': # nltk token for start of string
             # print("String Entered")
             in_str = "double"
@@ -207,13 +209,16 @@ def tokenise_fsl(fsl_line):
             token_data.append(["operator", token])
         elif token in ["abs", "all", "any", "bool", "chr", "dict", "enumerate", "eval", "float", "format", "help", "hex", "id", "input", "int", "isinstance", "len", "list", "map", "max", "min", "oct", "open", "ord", "pow", "print", "range", "repr", "reversed", "round", "set", "slice", "sorted", "str", "sum", "super", "tuple", "type"]:
             token_data.append(["built-in function", token])
-        elif token in ["if", "elif", "else", "while", "for", "break", "continue", ",match", "do"]:
+        elif token in ["if", "elif", "else", "while", "for", "break", "continue", "match"]:
             token_data.append(["control", token])
         elif token.isnumeric():
             if len(token_data) > 1 and token_data[-1] == ["expression", "."] and token_data[-2][0] == "int":
                 n = token_data.pop(-2)
                 token_data.pop(-1)
                 token_data.append(["float", n[1] + "." + token])
+            elif len(token_data) > 0 and token_data[-1] == ["expression", "."]:
+                token_data.pop(-1)
+                token_data.append(["float", "0." + token])
             else:
                 token_data.append(["int", token])
         elif token == "(" and token_data[-1][0] == "expression":
@@ -242,7 +247,7 @@ def tokenise_fsl(fsl_line):
             token_data.append(["string-semi", '"' + new_str])
 
     print(f"Token Data: {token_data}")
-    print("="*30)
+    print("="*100)
 
     return token_data
 

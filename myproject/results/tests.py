@@ -100,6 +100,10 @@ class TokeniseFslTestCase(TestCase):
         data = tokenise_fsl("2.5")
         self.assertEqual(data, [["float", "2.5"]])
 
+    def test_recognise_decimal(self):
+        data = tokenise_fsl(".5")
+        self.assertEqual(data, [["float", "0.5"]])
+
     def test_recognise_function(self):
         data = tokenise_fsl("my_func()")
         self.assertEqual(data, [["function", {"name" : "my_func", "params" : []}]])

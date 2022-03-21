@@ -78,6 +78,14 @@
   /* left: -45px; */
 }
 
+.stringdesc {
+    display: none;
+}
+
+.flex-container:hover .string:hover~.stringdesc{
+    display: block;
+}
+
 .norm {
   display: -webkit-flex;
   display: flex;
