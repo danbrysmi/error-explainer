@@ -1,0 +1,39 @@
+<!-- <li> {{node.name}}
+    {%if node.has_childs %}
+        <ul>
+         {%for ch in node.all_childs %}
+              {%with node=ch template_name="tree_view_template.html" %}
+                   {%include template_name%}
+              {%endwith%}
+         {%endfor%}
+         </ul>
+    {%endif%}
+</li> -->
+
+<div class="flex-container">
+    {% for item in cont %}
+        <div class="flex-child">
+        {% if item.0 == 'expression' %}
+            <div class="expression" title = "Expression" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Not quite sure what this is. Probably a variable of some sort.">{{ item.1 }}</div>
+        {% elif item.0 == 'string' %}
+            <div class="string" title = "String" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Strings represent text in a program.">"{{ item.1 }}"</div>
+        {% elif item.0 == 'int' %}
+            <div class="number" title = "Integer" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Integers represent whole numbers.">{{ item.1 }}</div>
+        {% elif item.0 == 'float' %}
+            <div class="number" title = "Float" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Floats can hold decimal values.">{{ item.1 }}</div>
+        {% elif item.0 == 'function' %}
+            <div class="function" title = "Function" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The function {{item.1.name}} has inputs.">{{ item.1.name }}(
+                {%with cont=item.1.params template_name="code_nested.html" %}
+                     {%include template_name%})
+                {%endwith%}
+                )</div>
+        {% elif item.0 == 'attribute' %}
+            <div class="attribute" title = "Attribute" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Attributes are properties that belong to the previous object (the thing before the .)">.{{ item.1 }}</div>
+        {% elif item.0 == 'control' %}
+            <div class="control" title = "Control Statement" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Control statements decide on the flow of the program.">{{ item.1 }}</div>
+        {% elif item.0 == 'operator' %}
+            <div class="operator" title = "Operator" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Operators perform simple tasks on values.">{{ item.1 }}</div>
+        {% endif %}
+        </div>
+    {% endfor %}
+    </div>

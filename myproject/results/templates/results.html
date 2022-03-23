@@ -105,7 +105,10 @@
                                     .{{ item.1.name }}(
                                 {% endif %}
 
-                                <div class="flex-container">
+                                {% with cont=item.1.params template_name="code_nested.html" %}
+                                {%include template_name %}
+                                {%endwith%})</div>
+                                <!-- <div class="flex-container">
                                     {% for item in item.1.params %}
                                         <div class="flex-child">
                                         {% if item.0 == 'expression' %}
@@ -127,8 +130,8 @@
                                         {% endif %}
                                         </div>
                                     {% endfor %}
-                                    </div>
-                                )</div>
+                                    </div> -->
+
                             {% elif item.0 == 'attribute' %}
                                 <div class="attribute" title = "Attribute" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Attributes are properties that belong to the previous object (the thing before the .)">.{{ item.1 }}</div>
                             {% elif item.0 == 'control' %}
