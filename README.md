@@ -3,6 +3,8 @@
 
 ### To-Do:
     - Add nested abilities for functions, brackets
+    - Add descriptions for Error Types, and Error Templates
+    - Implement trace checking to check syntax
     - Link top 10 common errors to traces templates
     - Improve explanation panels
     - Add Javascript function to reveal explanation on FSL breakdown hover
