@@ -1,7 +1,10 @@
 .home {
     background: #ddd;
     padding-top: 25px;
-    padding: 25px;
+    padding: 10px;
+    border-style: solid;
+    border-color: #0059B1;
+    border-width: 15px;
 }
 
 @font-face {
