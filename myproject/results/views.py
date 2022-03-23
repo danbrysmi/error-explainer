@@ -185,7 +185,7 @@ def tokenise_fsl(fsl_line):
     print(f"Tokens (after specials): {tokens}")
     in_str = False
     new_str = ""
-    in_brackets = False
+    in_brackets = 0
     func_name = ""
     meth_name = ""
     args = []
@@ -229,10 +229,10 @@ def tokenise_fsl(fsl_line):
             else:
                 token_data.append(["int", token])
         elif token == "(":
-            in_brackets = True
+            in_brackets += 1
             token_data.append(["bracket_start", "("])
         elif token == ")" and in_brackets:
-            in_brackets = False
+            in_brackets -= 1
             token_data.append(["bracket_end", ")"])
             #lbi = last bracket index
             lbi = len(token_data) - 1 - token_data[::-1].index(["bracket_start", "("])

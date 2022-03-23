@@ -116,6 +116,10 @@ class TokeniseFslTestCase(TestCase):
         data = tokenise_fsl("my_func(arg1, arg2, arg3)")
         self.assertEqual(data, [["function", {"name" : "my_func", "params" : [["expression", "arg1"], ["expression", "arg2"], ["expression", "arg3"]]}]])
 
+    def test_recognise_nested_function(self):
+        data = tokenise_fsl("my_func1(my_func2())")
+        self.assertEqual(data, [["function", {"name" : "my_func1", "params" : [["function", {"name" : "my_func2", "params" : [] }]]}]])
+
     def test_recognise_method(self):
         data = tokenise_fsl("thing.my_meth()")
         self.assertEqual(data, [["expression", "thing"], ["method", {"name" : "my_meth", "params" : []}]])
@@ -127,6 +131,10 @@ class TokeniseFslTestCase(TestCase):
     def test_recognise_method_Nparam(self):
         data = tokenise_fsl("thing.my_meth(arg1, arg2, arg3)")
         self.assertEqual(data, [["expression", "thing"], ["method", {"name" : "my_meth", "params" : [["expression", "arg1"], ["expression", "arg2"], ["expression", "arg3"]]}]])
+
+    def test_recognise_nested_method(self):
+        data = tokenise_fsl("thing.my_meth1(thing.my_meth2())")
+        self.assertEqual(data, [["expression", "thing"], ["method", {"name" : "my_meth1", "params" : [ ["expression", "thing"], ["method", {"name" : "my_meth2", "params" : [] }]]}]])
 
     def test_recognise_operator(self):
         data = tokenise_fsl('+')
