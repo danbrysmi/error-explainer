@@ -20,31 +20,20 @@
   <script src="{% static 'scripts/highlight_trace.js' %}"></script>
 </head>
 <body>
-    <div class=title><h1>Error Explainer</h1></div>
-  <div class="container-fluid">
+    <div class="flex-container">
+        <div class="flex">
+                <div class="home"><a href="{% url 'index' %}"><h1>Home<h1></a></div>
+        </div>
 
-    <div class="row">
-
-      <div class="col-1">
-      {% block sidebar %}
-        <ul class="sidebar-nav">
-          <li><a href="{% url 'index' %}">Home</a></li>
-        </ul>
-        {% endblock %}
-      </div>
-
-     <div class="col-2"></div>
-
-     <div class="col-6 ">
-        {% block content %}{% endblock %}
-     </div>
-
-    <div class="col-3">
-        <ul class="sidebar-nav">
-
-        </ul>
+        <div class="flex-grow-1">
+            <div class="title"><h1>Error Explainer</h1></div>
+        </div>
     </div>
 
+  <div class="container-fluid">
+     <div class="col">
+        {% block content %}{% endblock %}
+     </div>
   </div>
 
   <script>

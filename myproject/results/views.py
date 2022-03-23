@@ -187,6 +187,7 @@ def tokenise_fsl(fsl_line):
     new_str = ""
     in_brackets = False
     func_name = ""
+    meth_name = ""
     args = []
     token_data = []
 
@@ -237,6 +238,7 @@ def tokenise_fsl(fsl_line):
             lbi = len(token_data) - 1 - token_data[::-1].index(["bracket_start", "("])
             token_data.append(["brackets", ["items", token_data[lbi+1:-1]]])
             del token_data[lbi:-1]
+
             if len(token_data) > 1 and token_data[-2][0] == "expression":
                 func_name = token_data[-2][1]
                 args = token_data[-1][1][1]
@@ -245,6 +247,16 @@ def tokenise_fsl(fsl_line):
                 del token_data[-2:]
                 token_data.append(["function", {"name" : func_name, "params" : args}])
                 func_name = ""
+                args = []
+
+            elif len(token_data) > 1 and token_data[-2][0] == "attribute":
+                meth_name = token_data[-2][1]
+                args = token_data[-1][1][1]
+                # remove params that are commas parsed wrong
+                args = list(filter(lambda a: a != ["expression", ','], args))
+                del token_data[-2:]
+                token_data.append(["method", {"name" : meth_name, "params" : args}])
+                meth_name = ""
                 args = []
         elif token == ":":
             token_data.append(["colon", token])

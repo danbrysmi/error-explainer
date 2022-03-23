@@ -1,8 +1,7 @@
-.sidebar-nav {
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
-    background: #ddd
+.home {
+    background: #ddd;
+    padding-top: 25px;
+    padding: 25px;
 }
 
 @font-face {
@@ -20,11 +19,19 @@
   width: 70%;
 }
 
+.error-DEFAULT {
+  position: relative;
+  background: #E8E8E8;
+  white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7E4B9 */
+  /* transition: all ease-in-out 0.5s; */
+  /* left: 0; */
+  /* padding-left: 25px; */
+}
+
 .error-HEAD {
   position: relative;
   background: #EBFFF1;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7E4B9 */
-  width: 70%;
   /* transition: all ease-in-out 0.5s; */
   /* left: 0; */
   /* padding-left: 25px; */
@@ -33,7 +40,6 @@
   position: relative;
   background: #FFEBF9;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4A7D3 */
-  width: 70%;
   /* transition: all ease-in-out 0.5s; */
   /* left: 0; */
   /* padding-left: 25px; */
@@ -42,7 +48,6 @@
   position: relative;
   background: #EBEFFF;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS A7B4E4 */
-  width: 70%;
   /* transition: all ease-in-out 0.5s; */
   /* left: 0; */
   /* padding-left: 25px; */
@@ -51,7 +56,6 @@
   position: relative;
   background: #FFFBEB;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS E4D7A7 */
-  width: 70%;
   /* transition: all ease-in-out 0.5s; */
   /* left: 0; */
   /* padding-left: 25px; */
@@ -223,7 +227,8 @@ h1 {
 .title {
     background: #0059B1;
     text-align: center;
-    padding: 25px;
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 .flex-container {
     display: flex;
@@ -232,3 +237,18 @@ h1 {
 .flex-child {
     flex: 1;
 }
+
+.carousel-flex-container {
+    display: flex;
+    flex-direction: column;
+    background: #99BCDF;
+    height: 640px;
+    margin: 0px;
+    padding: 200px;
+    align-items: center;
+
+}
+
+/* body {
+  background-color: #99BCDF;
+} */

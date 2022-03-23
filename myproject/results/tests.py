@@ -116,6 +116,18 @@ class TokeniseFslTestCase(TestCase):
         data = tokenise_fsl("my_func(arg1, arg2, arg3)")
         self.assertEqual(data, [["function", {"name" : "my_func", "params" : [["expression", "arg1"], ["expression", "arg2"], ["expression", "arg3"]]}]])
 
+    def test_recognise_method(self):
+        data = tokenise_fsl("thing.my_meth()")
+        self.assertEqual(data, [["expression", "thing"], ["method", {"name" : "my_meth", "params" : []}]])
+
+    def test_recognise_method_1param(self):
+        data = tokenise_fsl("thing.my_meth(arg1)")
+        self.assertEqual(data, [["expression", "thing"], ["method", {"name" : "my_meth", "params" : [["expression", "arg1"]]}]])
+
+    def test_recognise_method_Nparam(self):
+        data = tokenise_fsl("thing.my_meth(arg1, arg2, arg3)")
+        self.assertEqual(data, [["expression", "thing"], ["method", {"name" : "my_meth", "params" : [["expression", "arg1"], ["expression", "arg2"], ["expression", "arg3"]]}]])
+
     def test_recognise_operator(self):
         data = tokenise_fsl('+')
         self.assertEqual(data, [["operator", '+']])
