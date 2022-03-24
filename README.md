@@ -2,26 +2,30 @@
 ## Dan Bryan-Smith's 3rd Year Project
 
 ### To-Do:
-    - Add nested abilities for functions, brackets
     - Add descriptions for Error Types, and Error Templates
     - Implement trace checking to check syntax
     - Link top 10 common errors to traces templates
     - Improve explanation panels
-    - Add Javascript function to reveal explanation on FSL breakdown hover
     - More tests are always good!
     - Add escape characters in parser
 
 ### Current Features:
     - Form that takes in text input for their error trace
     - When submitted, takes the user to a results page with help
-    - Presents the user with the correct template, along with the parameters and tags
-    - Each tag is associated to a help panel (bootstrap card)
-    - Panels give help text and link to more resources (currently w3schools)
-    - Selected tags provide python example solutions
+    - The results are a carousel as follows:
+    - 1) Presents the user with their trace giving an overview with info on the error type
+    - 2) Presents a breakdown of the users code that brought up the error (i.e. the FSL lines)
+    - 3) Presents an explanation of the error template if there is one (TBD)
+    - 4) Presents a worked example to relate to the error template with description (TBD), if there is one based on tags
+    - 5) Presents help panels of related concepts for additional resources (currently w3schools) based on tags
+    
     - Different parts of the traceback are highlighted based on type (header, frame summary, exception etc)
-    - Parsing of strings, ints, floats, functions, attributes, brackets and expressions from FSL line
     - Line number labelling from FSL's linked FSUM info
 
+### Parsing Abilities:
+    - Can parse strings, ints, floats, functions, methods, attributes, control statements, operators and unfinished strings/brackets.
+    - Function and Methods call the parser recursively for their parameters
+    
 ### Report Progress (Draft /#1)
     - Abstract (Done!)
     - Introduction (Done!)
