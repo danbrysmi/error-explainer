@@ -95,6 +95,14 @@ def solve(request):
 
     lines_zipped = zip(lines, line_nums)
 
+    indicator_count = 2
+    if fsl_count > 0:
+        indicator_count += 1
+    if example_count > 0:
+        indicator_count += 1
+    if tip_count > 0:
+        indicator_count += 1
+
     context = {
         'num_templates': num_templates,
         'num_types': num_types,
@@ -109,7 +117,8 @@ def solve(request):
         'lines_zipped' : lines_zipped,
         'fsl_count' : fsl_count,
         'example_count' : example_count,
-        'tip_count' : tip_count
+        'tip_count' : tip_count,
+        'indicator_count' : indicator_count
     }
     return render(request, 'results.html', context=context)
 

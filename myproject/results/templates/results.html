@@ -29,8 +29,22 @@
 </div> -->
 <br>
 <div class="container-fluid px-0">
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
-      <div class="carousel-inner bg-info">
+    <div id="results-carousel" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
+        <ol class="carousel-indicators">
+    <li data-target="#results-carousel" data-slide-to="0" class="active"></li>
+    <li data-target="#results-carousel" data-slide-to="1"></li>
+    {% if indicator_count > 4 %}
+    <li data-target="#results-carousel" data-slide-to="2"></li>
+    <li data-target="#results-carousel" data-slide-to="3"></li>
+    <li data-target="#results-carousel" data-slide-to="4"></li>
+    {% elif indicator_count > 3 %}
+    <li data-target="#results-carousel" data-slide-to="2"></li>
+    <li data-target="#results-carousel" data-slide-to="3"></li>
+    {% elif indicator_count > 2 %}
+    <li data-target="#results-carousel" data-slide-to="2"></li>
+    {% endif %}
+        </ol>
+      <div class="carousel-inner">
         <div class="carousel-item active">
             <div class="carousel-flex-container">
 
@@ -210,28 +224,43 @@
         </div>
         {% endif %}
 
-      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <a class="carousel-control-prev" href="#results-carousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <a class="carousel-control-next" href="#results-carousel" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
     </div>
 </div>
 <br>
-
-
-
-
-     <br>
-     {{ lines }}
+<br>
+{{ lines }}
 
 <script>
-    $('.carousel').carousel({
+$('#results-carousel').carousel({
   interval: false,
   wrap: false;
 });
+<!--
+var checkitem = function() {
+    var $this;
+    $this = $("#results-carousel");
+    if ($("#results-carousel .carousel-inner .item:first").hasClass("active")) {
+        $this.children(".carousel-control-prev").hide();
+        $this.children(".carousel-control-next").show();
+    } else if ($("#results-carousel .carousel-inner .item:last").hasClass("active")) {
+        $this.children(".carousel-control-next").hide();
+        $this.children(".carousel-control-prev").show();
+    } else {
+        $this.children(".carousel-control-next").show();
+        $this.children(".carousel-control-prev").show();
+    }
+};
+
+checkitem();
+
+$("#results-carousel").on("slid.bs.carousel", "", checkitem); -->
 </script>
 {% endblock content %}
