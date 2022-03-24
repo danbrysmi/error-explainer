@@ -162,6 +162,8 @@ def trace_hierarchy(trace):
             if len(ErrorType.objects.filter(name=line)) > 0:
                 lines.append([line, 'EXC'])
                 # print("EXC 2") # see EXC
+            elif line[0:3] == ">>>":
+                lines.append([line[3:], 'FSL'])
             else:
                 lines.append([line, 'FSL'])
                 # print("FSL") # FSL = FrameSummaryLine i.e. the code excerpt

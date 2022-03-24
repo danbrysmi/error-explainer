@@ -107,7 +107,7 @@
 
                                 {% with cont=item.1.params template_name="code_nested.html" %}
                                 {%include template_name %}
-                                {%endwith%})</div>
+                                {%endwith%}<div class="function" title = "Method" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The method '{{item.1.name}}'.">)</div>
                             {% elif item.0 == 'attribute' %}
                                 <div class="attribute" title = "Attribute" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Attributes are properties that belong to the previous object (the thing before the .)">.{{ item.1 }}</div>
                             {% elif item.0 == 'control' %}
