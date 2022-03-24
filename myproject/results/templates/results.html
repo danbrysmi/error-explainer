@@ -134,7 +134,7 @@
             <div class="carousel-flex-container">
 
                 <!-- PART 3 -->
-                <!-- CODE BREAKDOWN -->
+                <!-- CODE TEMPLATE BREAKDOWN -->
                 <div style="width:70%; background:#D4D4D4"><h2>Trace</h2>
                 <div id="trace-view">
                 {% for line in lines %}
@@ -166,6 +166,7 @@
 
             </div>
         </div>
+        {% if example_count > 0 %}
         <div class="carousel-item">
             <div class="carousel-flex-container">
 
@@ -173,13 +174,14 @@
                 {% for ex in examples %}
                     <pre><code class="python">{{ ex }}</code></pre>
                 {% endfor %}
-
             </div>
         </div>
+        {% endif %}
 
+        {% if tip_count > 0 %}
         <div class="carousel-item">
             <div class="carousel-flex-container">
-
+                <h4>Further Help</h4>
                 <div style="display: flex; flex-direction: row; flex-wrap: wrap">
 
                     {% for tip in tips %}
@@ -206,6 +208,8 @@
 
             </div>
         </div>
+        {% endif %}
+
       <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>

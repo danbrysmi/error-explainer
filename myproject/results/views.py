@@ -68,6 +68,7 @@ def solve(request):
     tags = list(temp.tags.names())
     tags.extend([p.lower() for p in params])
     relevant_tips = [tip for tip in tip_list if not set(tags).isdisjoint(tip['tags'])]
+    tip_count = len(relevant_tips)
 
     # extract examples from examples.py based on tags
     examples = []
@@ -75,6 +76,7 @@ def solve(request):
         example = extract_example(tag)
         if example:
             examples.append(example)
+    example_count = len(examples)
 
     lines = trace_hierarchy(error_trace)
     line_nums = [0]
@@ -105,7 +107,9 @@ def solve(request):
         'examples' : examples,
         'lines' : lines,
         'lines_zipped' : lines_zipped,
-        'fsl_count' : fsl_count
+        'fsl_count' : fsl_count,
+        'example_count' : example_count,
+        'tip_count' : tip_count
     }
     return render(request, 'results.html', context=context)
 
