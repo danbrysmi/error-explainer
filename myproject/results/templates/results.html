@@ -145,7 +145,7 @@
                     {% elif line.1 == 'FSL' %}
                         <div class="error-DEFAULT">{{ line.0 }}</div>
                     {% elif line.1 == 'EXC' %}
-                        <div class="error-EXC"><b>{% for w in line.0.split %}{% if forloop.counter > 1 %}<b>{{ w }} </b>{% else %}{{ w }} {% endif %}{% endfor %}</b></div>
+                        <div class="error-EXC">{% for w in line.0.split %}{% if forloop.counter > 1 %}<b>{{ w }} </b>{% else %}{{ w }} {% endif %}{% endfor %}</div>
                     {% endif %}
                 {% endfor %}
                 </div></div>
