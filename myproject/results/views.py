@@ -92,7 +92,7 @@ def solve(request):
     print(f"Lines (new): {lines}")
 
     lines_zipped = zip(lines, line_nums)
-    
+
     context = {
         'num_templates': num_templates,
         'num_types': num_types,
@@ -154,7 +154,7 @@ def trace_hierarchy(trace):
             lines.append([line, 'EXC'])
             # print("EXC") # EXC => EXCeption i.e. template line
         else:
-            if len(ErrorType.objects.filter(name=line)) > 0:
+            if len(ErrorType.objects.filter(name=line.split()[0][:-1])) > 0:
                 lines.append([line, 'EXC'])
                 # print("EXC 2") # see EXC
             elif line[0:3] == ">>>":
