@@ -47,9 +47,9 @@
                     {% elif line.1 == 'FSL' %}
                         <div class="error-DEFAULT">{{ line.0 }}</div>
                     {% elif line.1 == 'EXC' %}
-                        <div class="error-EXC"><b>{{ line.0.split.0 }}</b>{{ line.0.split|slice:"1:" }}</div>
+                        <div class="error-EXC">{% for word in line.0.split %}{% if forloop.counter == 1 %}<b>{{ word }} </b>{% else %}{{ word }} {% endif %}{% endfor %}</div>
                     {% endif %}
-                {% endfor %}
+                    {% endfor %}
                 </div></div>
 
                 <br>
@@ -60,12 +60,12 @@
                     {% endif %}
             </div>
         </div>
+
+        <!-- PART 2 -->
+        <!-- CODE BREAKDOWN -->
+        {% if fsl_count > 0 %}
         <div class="carousel-item">
             <div class="carousel-flex-container">
-
-    <!-- PART 2 -->
-    <!-- CODE BREAKDOWN -->
-
                 <div style="width:70%; background:#D4D4D4"><h2>Trace</h2>
                 <div id="trace-view">
                 {% for line in lines %}
@@ -114,7 +114,12 @@
                                 <div class="control" title = "Control Statement" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Control statements decide on the flow of the program.">{{ item.1 }}</div>
                             {% elif item.0 == 'operator' %}
                                 <div class="operator" title = "Operator" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Operators perform simple tasks on values.">{{ item.1 }}</div>
+                            {% elif item.0 == 'bracket_start' %}
+                                <div class="operator" title = "Opening Bracket" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The start of a pair of brackets.">{{ item.1 }}</div>
+                            {% elif item.0 == 'string-semi' %}
+                                <div class="string" title = "Unfinished String" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The start of a pair of brackets.">{{ item.1 }}</div>
                             {% endif %}
+
 
                             </div>
                         {% endfor %}
@@ -124,6 +129,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
         <div class="carousel-item">
             <div class="carousel-flex-container">
 
@@ -139,7 +145,7 @@
                     {% elif line.1 == 'FSL' %}
                         <div class="error-DEFAULT">{{ line.0 }}</div>
                     {% elif line.1 == 'EXC' %}
-                        <div class="error-EXC">{{ line.0 }}</div>
+                        <div class="error-EXC"><b>{% for w in line.0.split %}{% if forloop.counter > 1 %}<b>{{ w }} </b>{% else %}{{ w }} {% endif %}{% endfor %}</b></div>
                     {% endif %}
                 {% endfor %}
                 </div></div>

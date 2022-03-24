@@ -43,16 +43,13 @@ def index(request):
 def solve(request):
     """View function for presenting answers to the error trace."""
     error_trace = request.GET['error_trace']
-    # print(error_trace)
-    # NLTK CODE GOES HERE
+
     no_punct = re.sub(r'[^\w\s]','',error_trace)
     error_trace_list = no_punct.split()
     error_type_list = []
     for e in ErrorType.objects.all():
         error_type_list.append(e.name)
-    #print(error_type_list)
     main_error = list(set(error_trace_list).intersection(error_type_list))
-    #print(main_error)
     # returns data into context
     num_templates = ErrorTemplate.objects.all().count()
     num_types = ErrorType.objects.all().count()
@@ -60,8 +57,6 @@ def solve(request):
     if len(main_error) == 0:
         main_error = ErrorType.objects.filter(name="Unknown")
     main_error = main_error[0]
-    # print(f"Main Error {main_error}")
-    # print(f"Type: {type(main_error)}")
     result = match_template(error_trace)
 
     if result[1]:
@@ -70,8 +65,6 @@ def solve(request):
         params = []
     temp = result[0]
 
-    #print(result)
-    #print(params)
     tags = list(temp.tags.names())
     tags.extend([p.lower() for p in params])
     relevant_tips = [tip for tip in tip_list if not set(tags).isdisjoint(tip['tags'])]
@@ -79,7 +72,6 @@ def solve(request):
     # extract examples from examples.py based on tags
     examples = []
     for tag in tags:
-        #print(tag)
         example = extract_example(tag)
         if example:
             examples.append(example)
@@ -88,8 +80,10 @@ def solve(request):
     line_nums = [0]
     print(f"Lines: {lines}")
 
+    fsl_count = 0
     for line_id in range(len(lines)):
         if lines[line_id][1] == 'FSL':
+            fsl_count += 1
             parsed_line = tokenise_fsl(lines[line_id][0])
             lines[line_id].append(parsed_line)
         l_num = lines[line_id][2][1] if lines[line_id][1] == 'FSUM' else 0
@@ -98,7 +92,7 @@ def solve(request):
     print(f"Lines (new): {lines}")
 
     lines_zipped = zip(lines, line_nums)
-
+    
     context = {
         'num_templates': num_templates,
         'num_types': num_types,
@@ -110,7 +104,8 @@ def solve(request):
         'tips' : relevant_tips,
         'examples' : examples,
         'lines' : lines,
-        'lines_zipped' : lines_zipped
+        'lines_zipped' : lines_zipped,
+        'fsl_count' : fsl_count
     }
     return render(request, 'results.html', context=context)
 
