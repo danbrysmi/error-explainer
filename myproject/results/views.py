@@ -62,7 +62,7 @@ def solve(request):
         main_error = ErrorType.objects.filter(name="Unknown")
 
     main_error = main_error[0]
-    result = match_template(error_trace))
+    result = match_template(error_trace)
 
     if result[1]:
         params = result[1]

@@ -31,208 +31,205 @@
 <div class="container-fluid px-0">
     <div id="results-carousel" class="carousel slide" data-ride="carousel" data-interval="false" data-wrap="false">
         <ol class="carousel-indicators">
-    <li data-target="#results-carousel" data-slide-to="0" class="active"></li>
-    <li data-target="#results-carousel" data-slide-to="1"></li>
-    {% if indicator_count > 4 %}
-    <li data-target="#results-carousel" data-slide-to="2"></li>
-    <li data-target="#results-carousel" data-slide-to="3"></li>
-    <li data-target="#results-carousel" data-slide-to="4"></li>
-    {% elif indicator_count > 3 %}
-    <li data-target="#results-carousel" data-slide-to="2"></li>
-    <li data-target="#results-carousel" data-slide-to="3"></li>
-    {% elif indicator_count > 2 %}
-    <li data-target="#results-carousel" data-slide-to="2"></li>
-    {% endif %}
+            <li data-target="#results-carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#results-carousel" data-slide-to="1"></li>
+            {% if indicator_count > 4 %}
+            <li data-target="#results-carousel" data-slide-to="2"></li>
+            <li data-target="#results-carousel" data-slide-to="3"></li>
+            <li data-target="#results-carousel" data-slide-to="4"></li>
+            {% elif indicator_count > 3 %}
+            <li data-target="#results-carousel" data-slide-to="2"></li>
+            <li data-target="#results-carousel" data-slide-to="3"></li>
+            {% elif indicator_count > 2 %}
+            <li data-target="#results-carousel" data-slide-to="2"></li>
+            {% endif %}
         </ol>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-            <div class="carousel-flex-container">
+        <div class="carousel-inner">
+              <!-- PART 1 -->
+              <!-- TRACE OVERVIEW -->
+            <div class="carousel-item active">
+                <div class="carousel-flex-container">
 
-    <!-- PART 1 -->
-    <!-- TRACE OVERVIEW -->
-
-                <div style="width:70%; background:#D4D4D4"><h2>Trace Overview</h2>
-                <div id="trace-view">
-                {% for line in lines %}
-                    {% if line.1 == 'HEAD' %}
-                        <div class="error-DEFAULT">{{ line.0 }}</div>
-                    {% elif line.1 == 'FSUM' %}
-                        <div class="error-DEFAULT">{{ line.0 }}</div>
-                    {% elif line.1 == 'FSL' %}
-                        <div class="error-DEFAULT">{{ line.0 }}</div>
-                    {% elif line.1 == 'EXC' %}
-                        <div class="error-EXC">{% for word in line.0.split %}{% if forloop.counter == 1 %}<b>{{ word }} </b>{% else %}{{ word }} {% endif %}{% endfor %}</div>
-                    {% endif %}
-                    {% endfor %}
-                </div></div>
-
-                <br>
-                {% if error_type.name == "Unknown" %}
-                    <h4>Looks like we couldn't find your error :(</h4>
-                {% else %}
-                    <h4>It looks like your type of error was a {{error_type.name}}.</h4>
-                    <p>{{error_type.desc}}
-                    {% endif %}
-            </div>
-        </div>
-
-        <!-- PART 2 -->
-        <!-- CODE BREAKDOWN -->
-        {% if fsl_count > 0 %}
-        <div class="carousel-item">
-            <div class="carousel-flex-container">
-                <div style="width:70%; background:#D4D4D4"><h2>Trace</h2>
-                <div id="trace-view">
-                {% for line in lines %}
-                    {% if line.1 == 'HEAD' %}
-                        <div class="error-DEFAULT">{{ line.0 }}</div>
-                    {% elif line.1 == 'FSUM' %}
-                        <div class="error-DEFAULT">{{ line.0 }}</div>
-                    {% elif line.1 == 'FSL' %}
-                        <div class="error-FSL">{{ line.0 }}</div>
-                    {% elif line.1 == 'EXC' %}
-                        <div class="error-DEFAULT">{{ line.0 }}</div>
-                    {% endif %}
-                {% endfor %}
-                </div></div>
-                <br>
-                <div id=code style="width:70%;">
-                {% for line, l_num in lines_zipped %}
-                    {% if line.1 == 'FSL' %}
-                    <h3>Line {{l_num}}</h3>
-                    <div class="flex-container">
-                        {% for item in line.2 %}
-                            <div class="flex-child">
-                            {% if item.0 == 'expression' %}
-                                <div class="expression" title = "Expression" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Not quite sure what this is. Probably a variable of some sort.">{{ item.1 }}</div>
-                            {% elif item.0 == 'string' %}
-                                <div class="string" title = "String" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Strings represent text in a program.">"{{ item.1 }}"</div>
-                            {% elif item.0 == 'int' %}
-                                <div class="number" title = "Integer" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Integers represent whole numbers.">{{ item.1 }}</div>
-                            {% elif item.0 == 'float' %}
-                                <div class="number" title = "Float" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Floats can hold decimal values.">{{ item.1 }}</div>
-                            {% elif item.0 == 'function' or item.0 == 'method'%}
-                                {% if item.0 == 'function' %}
-                                <div class="function" title = "Function" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The function '{{item.1.name}}'.">
-                                    {{ item.1.name }}(
-                                {% elif item.0 == 'method' %}
-                                <div class="function" title = "Method" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The method '{{item.1.name}}'.">
-                                    .{{ item.1.name }}(
-                                {% endif %}
-
-                                {% with cont=item.1.params template_name="code_nested.html" %}
-                                {%include template_name %}
-                                {%endwith%}<div class="function" title = "Method" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The method '{{item.1.name}}'.">)</div>
-                            {% elif item.0 == 'attribute' %}
-                                <div class="attribute" title = "Attribute" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Attributes are properties that belong to the previous object (the thing before the .)">.{{ item.1 }}</div>
-                            {% elif item.0 == 'control' %}
-                                <div class="control" title = "Control Statement" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Control statements decide on the flow of the program.">{{ item.1 }}</div>
-                            {% elif item.0 == 'operator' %}
-                                <div class="operator" title = "Operator" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Operators perform simple tasks on values.">{{ item.1 }}</div>
-                            {% elif item.0 == 'bracket_start' %}
-                                <div class="operator" title = "Opening Bracket" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The start of a pair of brackets.">{{ item.1 }}</div>
-                            {% elif item.0 == 'string-semi' %}
-                                <div class="string" title = "Unfinished String" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The start of a pair of brackets.">{{ item.1 }}</div>
+                    <div style="width:70%; background:#D4D4D4"><h2>Trace Overview</h2>
+                        <div id="trace-view">
+                        {% for line in lines %}
+                            {% if line.1 == 'HEAD' %}
+                                <div class="error-DEFAULT">{{ line.0 }}</div>
+                            {% elif line.1 == 'FSUM' %}
+                                <div class="error-DEFAULT">{{ line.0 }}</div>
+                            {% elif line.1 == 'FSL' %}
+                                <div class="error-DEFAULT">{{ line.0 }}</div>
+                            {% elif line.1 == 'EXC' %}
+                                <div class="error-EXC">{% for word in line.0.split %}{% if forloop.counter == 1 %}<b>{{ word }} </b>{% else %}{{ word }} {% endif %}{% endfor %}</div>
                             {% endif %}
-
-
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
                         </div>
-                    {% endif %}
-                {% endfor %}
+                    </div>
+
+                    <br>
+                    {% if error_type.name == "Unknown" %}
+                        <h4>Looks like we couldn't find your error :(</h4>
+                    {% else %}
+                        <h4>It looks like your type of error was a {{error_type.name}}.</h4>
+                        <p>{{error_type.desc}}
+                        {% endif %}
                 </div>
             </div>
-        </div>
-        {% endif %}
-        <div class="carousel-item">
-            <div class="carousel-flex-container">
 
-                <!-- PART 3 -->
-                <!-- CODE TEMPLATE BREAKDOWN -->
-                <div style="width:70%; background:#D4D4D4"><h2>Trace</h2>
-                <div id="trace-view">
-                {% for line in lines %}
-                    {% if line.1 == 'HEAD' %}
-                        <div class="error-DEFAULT">{{ line.0 }}</div>
-                    {% elif line.1 == 'FSUM' %}
-                        <div class="error-DEFAULT">{{ line.0 }}</div>
-                    {% elif line.1 == 'FSL' %}
-                        <div class="error-DEFAULT">{{ line.0 }}</div>
-                    {% elif line.1 == 'EXC' %}
-                        <div class="error-EXC">{% for w in line.0.split %}{% if forloop.counter > 1 %}<b>{{ w }} </b>{% else %}{{ w }} {% endif %}{% endfor %}</div>
-                    {% endif %}
-                {% endfor %}
-                </div></div>
-                <br>
-
-                <h4>Template:</h4>
-                <h5>{{error_template}}</h5>
-
-                with parameters:<br>
-                {% for p in params %}
-                    {{ p }}<br>
-                {% endfor %}
-                <br>
-                with tags:<br>
-                {% for t in tags %}
-                    {{ t }}<br>
-                {% endfor %}
-
-            </div>
-        </div>
-        {% if example_count > 0 %}
-        <div class="carousel-item">
-            <div class="carousel-flex-container">
-
-                <h4>Examples</h4>
-                {% for ex in examples %}
-                    <pre><code class="python">{{ ex }}</code></pre>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
-
-        {% if tip_count > 0 %}
-        <div class="carousel-item">
-            <div class="carousel-flex-container">
-                <h4>Further Help</h4>
-                <div style="display: flex; flex-direction: row; flex-wrap: wrap">
-
-                    {% for tip in tips %}
-                    {#  Single Card Template:#}
-                      <div class="card" style="width: 18rem; margin: 10px">
-                        <div class="card-body">
-                          <div style="display: flex; flex-direction: row">
-                            <h5 class="card-title">{{ tip.name }}</h5>
-                            <!-- {#  Colored cirlce:#}
-                            <div style="
-                              background: red;
-                              width: 20px;
-                              height: 20px;
-                              margin-left: 10px;
-                              border-radius: 50%;
-                            "></div> -->
-                          </div>
-                          <p class="card-text">{{ tip.description}}</p>
-                          <a href= {{tip.link}} class="btn btn-primary">Help</a>
+            <!-- PART 2 -->
+            <!-- CODE BREAKDOWN -->
+            {% if fsl_count > 0 %}
+            <div class="carousel-item">
+                <div class="carousel-flex-container">
+                    <div style="width:70%; background:#D4D4D4"><h2>Trace</h2>
+                        <div id="trace-view">
+                        {% for line in lines %}
+                            {% if line.1 == 'HEAD' %}
+                                <div class="error-DEFAULT">{{ line.0 }}</div>
+                            {% elif line.1 == 'FSUM' %}
+                                <div class="error-DEFAULT">{{ line.0 }}</div>
+                            {% elif line.1 == 'FSL' %}
+                                <div class="error-FSL">{{ line.0 }}</div>
+                            {% elif line.1 == 'EXC' %}
+                                <div class="error-DEFAULT">{{ line.0 }}</div>
+                            {% endif %}
+                        {% endfor %}
                         </div>
-                      </div>
-                      {% endfor %}
-                 </div>
+                    </div>
+                    <br>
+                    <div id=code style="width:70%;">
+                    {% for line, l_num in lines_zipped %}
+                        {% if line.1 == 'FSL' %}
+                        <h3>Line {{l_num}}</h3>
+                        <div class="flex-container">
+                            {% for item in line.2 %}
+                                <div class="flex-child">
+                                {% if item.0 == 'expression' %}
+                                    <div class="expression" title = "Expression" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Not quite sure what this is. Probably a variable of some sort.">{{ item.1 }}</div>
+                                {% elif item.0 == 'string' %}
+                                    <div class="string" title = "String" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Strings represent text in a program.">"{{ item.1 }}"</div>
+                                {% elif item.0 == 'int' %}
+                                    <div class="number" title = "Integer" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Integers represent whole numbers.">{{ item.1 }}</div>
+                                {% elif item.0 == 'float' %}
+                                    <div class="number" title = "Float" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Floats can hold decimal values.">{{ item.1 }}</div>
+                                {% elif item.0 == 'function' or item.0 == 'method'%}
+                                    {% if item.0 == 'function' %}
+                                    <div class="function" title = "Function" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The function '{{item.1.name}}'.">
+                                        {{ item.1.name }}(
+                                        {% with cont=item.1.params template_name="code_nested.html" %}
+                                        {%include template_name %})
+                                        {%endwith%}</div>
 
+                                    {% elif item.0 == 'method' %}
+                                    <div class="function" title = "Method" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The method '{{item.1.name}}'.">
+                                        .{{ item.1.name }}(
+                                    {% with cont=item.1.params template_name="code_nested.html" %}
+                                    {%include template_name %})
+                                    {%endwith%}</div>
+                                    {% endif %}
+                                {% elif item.0 == 'attribute' %}
+                                    <div class="attribute" title = "Attribute" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Attributes are properties that belong to the previous object (the thing before the .)">.{{ item.1 }}</div>
+                                {% elif item.0 == 'control' %}
+                                    <div class="control" title = "Control Statement" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Control statements decide on the flow of the program.">{{ item.1 }}</div>
+                                {% elif item.0 == 'operator' %}
+                                    <div class="operator" title = "Operator" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Operators perform simple tasks on values.">{{ item.1 }}</div>
+                                {% elif item.0 == 'bracket_start' %}
+                                    <div class="operator" title = "Opening Bracket" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The start of a pair of brackets.">{{ item.1 }}</div>
+                                {% elif item.0 == 'string-semi' %}
+                                    <div class="string" title = "Unfinished String" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The start of a pair of brackets.">{{ item.1 }}</div>
+                                {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                </div>
             </div>
-        </div>
-        {% endif %}
+            {% endif %}
+            <!-- PART 3 -->
+            <!-- CODE TEMPLATE BREAKDOWN -->
+            <div class="carousel-item">
+                <div class="carousel-flex-container">
+                    <div style="width:70%; background:#D4D4D4"><h2>Trace</h2>
+                    <div id="trace-view">
+                    {% for line in lines %}
+                        {% if line.1 == 'HEAD' %}
+                            <div class="error-DEFAULT">{{ line.0 }}</div>
+                        {% elif line.1 == 'FSUM' %}
+                            <div class="error-DEFAULT">{{ line.0 }}</div>
+                        {% elif line.1 == 'FSL' %}
+                            <div class="error-DEFAULT">{{ line.0 }}</div>
+                        {% elif line.1 == 'EXC' %}
+                            <div class="error-EXC">{% for w in line.0.split %}{% if forloop.counter > 1 %}<b>{{ w }} </b>{% else %}{{ w }} {% endif %}{% endfor %}</div>
+                        {% endif %}
+                    {% endfor %}
+                    </div></div>
+                    <br>
 
-      <a class="left carousel-control-prev" href="#results-carousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control-next" href="#results-carousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+                    <h4>Template:</h4>
+                    <h5>{{error_template}}</h5>
+
+                    with parameters:<br>
+                    {% for p in params %}
+                        {{ p }}<br>
+                    {% endfor %}
+                    <br>
+                    with tags:<br>
+                    {% for t in tags %}
+                        {{ t }}<br>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <!-- PART 4 -->
+            <!-- TEMPLATE EXAMPLES -->
+            {% if example_count > 0 %}
+            <div class="carousel-item">
+                <div class="carousel-flex-container">
+
+                    <h4>Examples</h4>
+                    {% for ex in examples %}
+                        <pre><code class="python">{{ ex }}</code></pre>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- PART 5 -->
+            <!-- FURTHER RESOURCES -->
+            {% if tip_count > 0 %}
+            <div class="carousel-item">
+                <div class="carousel-flex-container">
+                    <h4>Further Help</h4>
+                    <div style="display: flex; flex-direction: row; flex-wrap: wrap">
+
+                        {% for tip in tips %}
+                        {#  Single Card Template:#}
+                          <div class="card" style="width: 18rem; margin: 10px">
+                            <div class="card-body">
+                              <div style="display: flex; flex-direction: row">
+                                <h5 class="card-title">{{ tip.name }}</h5>
+                              </div>
+                              <p class="card-text">{{ tip.description}}</p>
+                              <a href= {{tip.link}} class="btn btn-primary">Help</a>
+                            </div>
+                          </div>
+                          {% endfor %}
+                     </div>
+                </div>
+            </div>
+            {% endif %}
+
+          <a class="carousel-control-prev" href="#results-carousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#results-carousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+      </div>
     </div>
 </div>
 <br>
@@ -243,29 +240,6 @@
 $('#results-carousel').carousel({
   interval: false,
   wrap: false;
-});
-
-var checkitem = function() {
-    var $this;
-    $this = $("#results-carousel");
-    if ($("#results-carousel .carousel-inner .item:first").hasClass("active")) {
-        $this.children(".left").hide()
-        $this.children(".right").show()
-    } else if ($("#results-carousel .carousel-inner .item:last").hasClass("active")) {
-        $this.children(".right .carousel-control-next").hide()
-        $this.children(".left .carousel-control-prev").show()
-    } else {
-        $this.children(".right .carousel-control-next").show();
-        $this.children(".left .carousel-control-prev").show();
-    }
-};
-
-checkitem();
-
-$("#results-carousel").on("slid.bs.carousel", "", checkitem);
-
-$(document).ready(function(){
-	checkitem();
 });
 </script>
 {% endblock content %}
