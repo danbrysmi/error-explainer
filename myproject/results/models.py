@@ -6,10 +6,10 @@ from taggit.managers import TaggableManager
 class ErrorType(models.Model):
     """Model representing a python traceback error type."""
     name = models.CharField(max_length=30, help_text="Must be a python error class, e.g. TypeError")
-
+    desc = models.CharField(max_length=400)
     def __str__(self):
         """String for representing the Model object."""
-        return self.name
+        return f"Name: {self.name} \nDesc: {self.desc}"
 
 class ErrorTemplate(models.Model):
     """Model representing a python traceback error template."""

@@ -48,16 +48,21 @@ def solve(request):
     error_trace_list = no_punct.split()
     error_type_list = []
     for e in ErrorType.objects.all():
-        error_type_list.append(e.name)
-    main_error = list(set(error_trace_list).intersection(error_type_list))
+        error_type_list.append(e)
+    main_error = list(set(error_trace_list).intersection(set([er.name for er in error_type_list])))
+    for i in set(error_trace_list):
+        if len(ErrorType.objects.filter(name=i)) > 0:
+            main_error=ErrorType.objects.filter(name=i)
+
     # returns data into context
     num_templates = ErrorTemplate.objects.all().count()
     num_types = ErrorType.objects.all().count()
 
     if len(main_error) == 0:
         main_error = ErrorType.objects.filter(name="Unknown")
+
     main_error = main_error[0]
-    result = match_template(error_trace)
+    result = match_template(error_trace))
 
     if result[1]:
         params = result[1]

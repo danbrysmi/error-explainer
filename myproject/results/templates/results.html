@@ -70,7 +70,8 @@
                 {% if error_type.name == "Unknown" %}
                     <h4>Looks like we couldn't find your error :(</h4>
                 {% else %}
-                    <h4>It looks like your type of error was a {{error_type}}.</h4>
+                    <h4>It looks like your type of error was a {{error_type.name}}.</h4>
+                    <p>{{error_type.desc}}
                     {% endif %}
             </div>
         </div>
