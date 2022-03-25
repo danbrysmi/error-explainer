@@ -224,11 +224,11 @@
         </div>
         {% endif %}
 
-      <a class="carousel-control-prev" href="#results-carousel" role="button" data-slide="prev">
+      <a class="left carousel-control-prev" href="#results-carousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="carousel-control-next" href="#results-carousel" role="button" data-slide="next">
+      <a class="right carousel-control-next" href="#results-carousel" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
@@ -243,24 +243,28 @@ $('#results-carousel').carousel({
   interval: false,
   wrap: false;
 });
-<!--
+
 var checkitem = function() {
     var $this;
     $this = $("#results-carousel");
     if ($("#results-carousel .carousel-inner .item:first").hasClass("active")) {
-        $this.children(".carousel-control-prev").hide();
-        $this.children(".carousel-control-next").show();
+        $this.children(".left").hide()
+        $this.children(".right").show()
     } else if ($("#results-carousel .carousel-inner .item:last").hasClass("active")) {
-        $this.children(".carousel-control-next").hide();
-        $this.children(".carousel-control-prev").show();
+        $this.children(".right .carousel-control-next").hide()
+        $this.children(".left .carousel-control-prev").show()
     } else {
-        $this.children(".carousel-control-next").show();
-        $this.children(".carousel-control-prev").show();
+        $this.children(".right .carousel-control-next").show();
+        $this.children(".left .carousel-control-prev").show();
     }
 };
 
 checkitem();
 
-$("#results-carousel").on("slid.bs.carousel", "", checkitem); -->
+$("#results-carousel").on("slid.bs.carousel", "", checkitem);
+
+$(document).ready(function(){
+	checkitem();
+});
 </script>
 {% endblock content %}
