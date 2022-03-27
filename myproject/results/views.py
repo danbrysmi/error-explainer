@@ -227,8 +227,13 @@ def tokenise_fsl(fsl_line):
                 new_str += " " + token
             else:
                 new_str += token
-        elif token in ["and", "not", "or", "+", "=", "+=", "==", ">=", "<=", ">", "<", "!="]:
+        elif token in ["and", "not", "or", "+", "=", "+=", "==", ">=", "<=", ">", "<", "!=", "-", "/", "//", "%", "*", "-=", "/=", "*=", "**"]:
             token_data.append(["operator", token])
+            if len(token_data) > 1 and token_data[-2][0] == "operator":
+                test_token = token_data[-2][1] + token_data[-1][1]
+                if test_token in ["and", "not", "or", "+", "=", "+=", "==", ">=", "<=", ">", "<", "!=", "-", "/", "//", "%", "*", "-=", "/=", "*=", "**"]:
+                    del token_data[-2:]
+                    token_data.append(["operator", test_token])
         # elif token in ["abs", "all", "any", "bool", "chr", "dict", "enumerate", "eval", "float", "format", "help", "hex", "id", "input", "int", "isinstance", "len", "list", "map", "max", "min", "oct", "open", "ord", "pow", "print", "range", "repr", "reversed", "round", "set", "slice", "sorted", "str", "sum", "super", "tuple", "type"]:
         #     token_data.append(["built-in function", token])
         elif token in ["if", "elif", "else", "while", "for", "break", "continue", "return", "match"]:
