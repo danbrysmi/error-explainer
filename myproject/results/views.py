@@ -311,6 +311,8 @@ def tokenise_fsl(fsl_line):
             #     args = []
         elif token == ":":
             token_data.append(["colon", token])
+        elif token == ",":
+            token_data.append(["comma", ','])
         else:
             if len(token_data) > 0 and token_data[-1] == ["expression", "."]:
                 token_data.remove(["expression", "."])

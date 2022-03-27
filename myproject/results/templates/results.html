@@ -126,7 +126,7 @@
                                 {% elif item.0 == 'string-semi' %}
                                     <div class="string" title = "Unfinished String" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The start of a pair of brackets.">{{ item.1 }}</div>
                                 {% else %}
-                                    <div class="expression" title = "{{item.0}}" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="A {{item.0}}">{{ item.1 }}</div>
+                                    <div class="expression" title = "{{item.0}}" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="A {{item.0}}.">{{ item.1 }}</div>
                                 {% endif %}
                                 </div>
                             {% endfor %}
