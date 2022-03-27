@@ -159,8 +159,8 @@ def match_template(error_trace):
 def trace_hierarchy(trace):
     tracelines = trace.split("\n")
     lines = []
-
-    for line in tracelines:
+    print(f"tracelines: {tracelines}")
+    for line in tracelines[:-1]:
         if re.search(re.escape('Traceback (most recent call last):'), line):
             lines.append([line, 'HEAD'])
             # print("HEAD") # HEAD => Header i.e. Traceback Line
@@ -172,10 +172,11 @@ def trace_hierarchy(trace):
             lines.append([line, 'EXC'])
             # print("EXC") # EXC => EXCeption i.e. template line
         else:
-            if len(ErrorType.objects.filter(name=line.split()[0][:-1])) > 0:
+            print(f"line.split(): {line.split()}")
+            if len(line.split()[0]) > 1 and len(ErrorType.objects.filter(name=line.split()[0][:-1])) > 0:
                 lines.append([line, 'EXC'])
                 # print("EXC 2") # see EXC
-            elif line[0:3] == ">>>":
+            elif len(line) > 3 and line[0:3] == ">>>":
                 lines.append([line[3:], 'FSL'])
             else:
                 lines.append([line, 'FSL'])

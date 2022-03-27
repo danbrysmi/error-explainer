@@ -158,8 +158,8 @@
                     <br>
 
                     <h4>Template:</h4>
-                    <h5>{{error_template}}</h5>
-
+                    <h5>{{error_template.template}}</h5>
+                    {{error_template.short_desc}}
                     with parameters:<br>
                     {% for p in params %}
                         {{ p }}<br>

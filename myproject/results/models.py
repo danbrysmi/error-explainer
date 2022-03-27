@@ -15,6 +15,7 @@ class ErrorTemplate(models.Model):
     """Model representing a python traceback error template."""
     template = models.CharField(max_length=400, help_text='Paste your error trace here!')
     error_type = models.ForeignKey('ErrorType', on_delete=models.SET_NULL, null=True)
+    short_desc = models.CharField(max_length=800, help_text="A brief description of the specific trace")
     tags = TaggableManager()
 
     def __str__(self):
