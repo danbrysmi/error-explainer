@@ -2,12 +2,13 @@
 ## Dan Bryan-Smith's 3rd Year Project
 
 ### To-Do:
-    - Add descriptions for Error Types, and Error Templates
+    - Add descriptions for Error Templates
     - Implement trace checking to check syntax
     - Link top 10 common errors to traces templates
     - Improve explanation panels
     - More tests are always good!
     - Add escape characters in parser
+    - Add parsing for indexes (i.e. square brackets)
 
 ### Current Features:
     - Form that takes in text input for their error trace
@@ -23,7 +24,14 @@
     - Line number labelling from FSL's linked FSUM info
 
 ### Parsing Abilities:
-    - Can parse strings, ints, floats, functions, methods, attributes, control statements, operators and unfinished strings/brackets.
+    - Strings
+    - Ints and floats
+    - Functions and methods
+    - Attributes
+    - Control statements
+    - Operators
+    - Unfinished strings/brackets.
+    - Anything else is parssed as an expression
     - Function and Methods call the parser recursively for their parameters
     
 ### Report Progress (Draft /#1)
