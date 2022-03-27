@@ -2,31 +2,11 @@
 
 {% block content %}
 
-  <h1>Results</h1>
-  <p>Welcome to TemplateLibrary, a website developed by <em>Dan Bryan-Smith</em>!</p>
-  {% comment %}
-  <h2>Dynamic content</h2>
-  <p>The library has the following record counts:</p>
-  <ul>
-    <li><strong>Templates:</strong> {{ num_templates }}</li>
-    <li><strong>Types:</strong> {{ num_types }}</li>
-  </ul>
-{% endcomment %}
-
+<h1>Results</h1>
 
 <br>
 <br>
 
-
-
-
-
-<!-- <div class="stringdesc">
-    <div class="string">"This is a string."</div>
-</div> -->
-<!-- <div id="code-view">
-<p class="error_trace">{{ error_trace}}</p>
-</div> -->
 <br>
 <div class="container-fluid px-0">
     <div id="results-carousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false" data-wrap="false">
@@ -49,7 +29,6 @@
               <!-- TRACE OVERVIEW -->
             <div class="carousel-item active">
                 <div class="carousel-flex-container">
-
                     <div style="width:70%; background:#D4D4D4"><h2>Trace Overview</h2>
                         <div id="trace-view">
                         {% for line in lines %}
@@ -65,7 +44,6 @@
                             {% endfor %}
                         </div>
                     </div>
-
                     <br>
                     {% if error_type.name == "Unknown" %}
                         <h4>Looks like we couldn't find your error :(</h4>
@@ -105,14 +83,14 @@
                             {% for item in line.2 %}
                                 <div class="flex-child">
                                 {% if item.0 == 'expression' %}
-                                    <div class="expression" title = "Expression" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Not quite sure what this is. Probably a variable of some sort.">{{ item.1 }}</div>
+                                    <div class="expression" title = "Expression" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="A variable named {{item.1}}.">{{ item.1 }}</div>
                                 {% elif item.0 == 'string' %}
-                                    <div class="string" title = "String" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Strings represent text in a program.">"{{ item.1 }}"</div>
+                                    <div class="string" title = "String" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content='The text "{{item.1}}".'>"{{ item.1 }}"</div>
                                 {% elif item.0 == 'int' %}
                                     <div class="number" title = "Integer" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Integers represent whole numbers.">{{ item.1 }}</div>
                                 {% elif item.0 == 'float' %}
                                     <div class="number" title = "Float" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Floats can hold decimal values.">{{ item.1 }}</div>
-                                {% elif item.0 == 'function' or item.0 == 'method'%}
+                                {% elif item.0 == 'function' or item.0 == 'method' or item.0 == 'brackets' or item.0 == 'square_brackets' %}
                                     {% if item.0 == 'function' %}
                                     <div class="function" title = "Function" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The function '{{item.1.name}}'.">
                                         {{ item.1.name }}(
@@ -126,6 +104,16 @@
                                     {% with cont=item.1.params template_name="code_nested.html" %}
                                     {%include template_name %})
                                     {%endwith%}</div>
+                                    {% elif item.0 == 'brackets' %}
+                                    <div class="function" title = "Tuple" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Used to store a list of values that cannot be changed.">
+                                        ({% with cont=item.1.1 template_name="code_nested.html" %}
+                                        {%include template_name %})
+                                        {%endwith%}</div>
+                                    {% elif item.0 == 'square_brackets' %}
+                                    <div class="function" title = "Square Brackets" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Used either to contain an index, or be a list.">
+                                        [{% with cont=item.1.1 template_name="code_nested.html" %}
+                                        {%include template_name %}]
+                                        {%endwith%}</div>
                                     {% endif %}
                                 {% elif item.0 == 'attribute' %}
                                     <div class="attribute" title = "Attribute" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="Attributes are properties that belong to the previous object (the thing before the .)">.{{ item.1 }}</div>
@@ -137,6 +125,8 @@
                                     <div class="operator" title = "Opening Bracket" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The start of a pair of brackets.">{{ item.1 }}</div>
                                 {% elif item.0 == 'string-semi' %}
                                     <div class="string" title = "Unfinished String" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="The start of a pair of brackets.">{{ item.1 }}</div>
+                                {% else %}
+                                    <div class="expression" title = "{{item.0}}" data-trigger = "hover" data-placement = "bottom" data-container="body" data-toggle="popover" data-content="A {{item.0}}">{{ item.1 }}</div>
                                 {% endif %}
                                 </div>
                             {% endfor %}

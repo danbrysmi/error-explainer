@@ -201,6 +201,7 @@ def tokenise_fsl(fsl_line):
     in_str = False
     new_str = ""
     in_brackets = 0
+    in_square = 0
     func_name = ""
     meth_name = ""
     args = []
@@ -251,6 +252,9 @@ def tokenise_fsl(fsl_line):
         elif token == "(":
             in_brackets += 1
             token_data.append(["bracket_start", "("])
+        elif token == "[":
+            in_square += 1
+            token_data.append(["square_start", "["])
         elif token == ")" and in_brackets:
             in_brackets -= 1
             token_data.append(["bracket_end", ")"])
@@ -278,6 +282,33 @@ def tokenise_fsl(fsl_line):
                 token_data.append(["method", {"name" : meth_name, "params" : args}])
                 meth_name = ""
                 args = []
+        elif token == "]" and in_square:
+            in_square -= 1
+            token_data.append(["square_end", ")"])
+            #lbi = last bracket index
+            lbi = len(token_data) - 1 - token_data[::-1].index(["square_start", "["])
+            token_data.append(["square_brackets", ["items", token_data[lbi+1:-1]]])
+            del token_data[lbi:-1]
+
+            # if len(token_data) > 1 and token_data[-2][0] == "expression":
+            #     func_name = token_data[-2][1]
+            #     args = token_data[-1][1][1]
+            #     # remove params that are commas parsed wrong
+            #     args = list(filter(lambda a: a != ["expression", ','], args))
+            #     del token_data[-2:]
+            #     token_data.append(["function", {"name" : func_name, "params" : args}])
+            #     func_name = ""
+            #     args = []
+            #
+            # elif len(token_data) > 1 and token_data[-2][0] == "attribute":
+            #     meth_name = token_data[-2][1]
+            #     args = token_data[-1][1][1]
+            #     # remove params that are commas parsed wrong
+            #     args = list(filter(lambda a: a != ["expression", ','], args))
+            #     del token_data[-2:]
+            #     token_data.append(["method", {"name" : meth_name, "params" : args}])
+            #     meth_name = ""
+            #     args = []
         elif token == ":":
             token_data.append(["colon", token])
         else:
