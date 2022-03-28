@@ -10,7 +10,6 @@ from . import views
 #   name - naming your URL so it can be referred to from elsewhere in Django
 urlpatterns = [
     path('', views.index, name='index'),
-    path('home/', views.error_result, name='error_result'),
     path('solve/', views.solve, name='solve'),
     #path('', views.index, name='index'),
 ]
