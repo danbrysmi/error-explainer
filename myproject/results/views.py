@@ -161,6 +161,8 @@ def trace_hierarchy(trace):
     lines = []
     # print(f"tracelines: {tracelines}")
     for line in tracelines:
+        if line == '':
+            continue
         if re.search(re.escape('Traceback (most recent call last):'), line):
             lines.append([line, 'HEAD'])
             # print("HEAD") # HEAD => Header i.e. Traceback Line
