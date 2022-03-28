@@ -17,14 +17,15 @@ def index(request):
     num_templates = ErrorTemplate.objects.all().count()
     num_types = ErrorType.objects.all().count()
 
-    # # Available books (status = 'a')
-    # num_instances_available = BookInstance.objects.filter(status__exact='a').count()
+    # First time = empty form
     if request.method == "GET":
         form = SubmitErrorForm()
 
+    # After form submission
     elif request.method == "POST":
         form = SubmitErrorForm(request.POST)
         if form.is_valid():
+            # Store trace info in session to be used in solve()
             trace = form.cleaned_data['error_trace']
             request.session['error_trace'] = trace
             return HttpResponseRedirect(reverse('solve'))
@@ -39,42 +40,35 @@ def index(request):
 
 def solve(request):
     """View function for presenting answers to the error trace."""
-    # error_trace = request.GET['error_trace']
-    print(request.GET)
+    # get trace from session
     error_trace = request.session.get('error_trace', '')
 
+    # remove punctation
     no_punct = re.sub(r'[^\w\s]','',error_trace)
-    error_trace_list = no_punct.split()
-    error_type_list = []
-    for e in ErrorType.objects.all():
-        error_type_list.append(e)
-    main_error = list(set(error_trace_list).intersection(set([er.name for er in error_type_list])))
-    for i in set(error_trace_list):
-        if len(ErrorType.objects.filter(name=i)) > 0:
-            main_error=ErrorType.objects.filter(name=i)
 
     # returns data into context
     num_templates = ErrorTemplate.objects.all().count()
     num_types = ErrorType.objects.all().count()
 
-    if len(main_error) == 0:
-        main_error = ErrorType.objects.filter(name="Unknown")
-
-    main_error = main_error[0]
+    # matching trace to possible templates
     result = match_template(error_trace)
-
+    error_type = result[0].error_type
     if result[1]:
         params = result[1]
     else:
         params = []
     temp = result[0]
 
+    # get list of applicable tags and wildcards from the <n>'s in the template
     tags = list(temp.tags.names())
     tags.extend([p.lower() for p in params])
+    # tip_list - NEEDS MIGRATING TO A MODEL, will become obsolete
     relevant_tips = [tip for tip in tip_list if not set(tags).isdisjoint(tip['tags'])]
+
+    # if tip_count = 0, no point showing tip page on carousel
     tip_count = len(relevant_tips)
 
-    # extract examples from examples.py based on tags
+    # extract examples from examples.py based on tags (change me to a model!)
     examples = []
     for tag in tags:
         example = extract_example(tag)
@@ -82,10 +76,14 @@ def solve(request):
             examples.append(example)
     example_count = len(examples)
 
+    # get trace hierarchy
     lines = trace_hierarchy(error_trace)
+
+    # offset line numbers so FSUM line above gives FSL line number for reference
     line_nums = [0]
     print(f"Lines: {lines}")
 
+    # if fsl_count = 0 no need to show code breakdown in carousel
     fsl_count = 0
     for line_id in range(len(lines)):
         if lines[line_id][1] == 'FSL':
@@ -96,9 +94,10 @@ def solve(request):
         line_nums.append(l_num)
     line_nums.pop(-1)
     print(f"Lines (new): {lines}")
-
+    # zip two lists together so they can be iterated simultaneously in template
     lines_zipped = zip(lines, line_nums)
 
+    # count of total number of items needed in carousel
     indicator_count = 2
     if fsl_count > 0:
         indicator_count += 1
@@ -111,7 +110,7 @@ def solve(request):
         'num_templates': num_templates,
         'num_types': num_types,
         'error_trace': error_trace,
-        'error_type': main_error,
+        'error_type': error_type,
         'error_template': temp,
         'params': params,
         'tags' : tags,
@@ -149,16 +148,13 @@ def tokenise_fsl(fsl_line):
     token_data = []
 
     for token in tokens:
-        print(f"Token Data: {token_data}")
-        if not in_str and token == '"': # nltk token for start of string
-            # print("String Entered")
+        if not in_str and token == '"':
             in_str = "double"
             new_str = ""
         elif not in_str and token == "'":
             in_str = "single"
             new_str = ""
         elif in_str == "double" and token == '"':
-            # print("String Exited")
             in_str = False
             token_data.append(["string", new_str])
         elif in_str == "single" and token == "'":
@@ -230,26 +226,6 @@ def tokenise_fsl(fsl_line):
             lbi = len(token_data) - 1 - token_data[::-1].index(["square_start", "["])
             token_data.append(["square_brackets", ["items", token_data[lbi+1:-1]]])
             del token_data[lbi:-1]
-
-            # if len(token_data) > 1 and token_data[-2][0] == "expression":
-            #     func_name = token_data[-2][1]
-            #     args = token_data[-1][1][1]
-            #     # remove params that are commas parsed wrong
-            #     args = list(filter(lambda a: a != ["expression", ','], args))
-            #     del token_data[-2:]
-            #     token_data.append(["function", {"name" : func_name, "params" : args}])
-            #     func_name = ""
-            #     args = []
-            #
-            # elif len(token_data) > 1 and token_data[-2][0] == "attribute":
-            #     meth_name = token_data[-2][1]
-            #     args = token_data[-1][1][1]
-            #     # remove params that are commas parsed wrong
-            #     args = list(filter(lambda a: a != ["expression", ','], args))
-            #     del token_data[-2:]
-            #     token_data.append(["method", {"name" : meth_name, "params" : args}])
-            #     meth_name = ""
-            #     args = []
         elif token == ":":
             token_data.append(["colon", token])
         elif token == ",":
@@ -269,7 +245,7 @@ def tokenise_fsl(fsl_line):
 
     return token_data
 
-def extract_example(param):
+def extract_example(param): # will become obsolete with models - needs fixing
     # use absolute path
     here = os.path.dirname(os.path.abspath(__file__))
     filename = os.path.join(here, 'examples.py')

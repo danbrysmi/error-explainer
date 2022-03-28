@@ -11,5 +11,4 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('solve/', views.solve, name='solve'),
-    #path('', views.index, name='index'),
 ]
