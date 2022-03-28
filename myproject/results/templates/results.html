@@ -66,8 +66,8 @@
                                 <div class="error-DEFAULT">{{ line.0 }}</div>
                             {% elif line.1 == 'FSUM' %}
                                 <div class="error-DEFAULT">{{ line.0 }}</div>
-                            {% elif line.1 == 'FSL' %}
-                                <div class="error-FSL">{{ line.0 }}</div>
+                            {% elif line.1 == 'FSL' or line.1 == 'CARAT' %}
+                                <div class="error-FSL"><b>{{ line.0 }}</b></div>
                             {% elif line.1 == 'EXC' %}
                                 <div class="error-DEFAULT">{{ line.0 }}</div>
                             {% endif %}

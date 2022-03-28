@@ -167,10 +167,15 @@ def trace_hierarchy(trace):
         elif re.search(' File "(.+)", line (\d+), in (.+)', line):
             res = re.search(' File "(.+)", line (\d+), in (.+)', line)
             lines.append([line, 'FSUM', [res.group(1), res.group(2), res.group(3)]])
+        elif re.search('File "(.+)", line (\d+)', line):
+            res = re.search('File "(.+)", line (\d+)', line)
+            lines.append([line, 'FSUM', [res.group(1), res.group(2), False]])
             # print("FSUM") # FSUM => FrameSUMmary i.e. location info
         elif match_template(line)[0].template != "Error not found":
             lines.append([line, 'EXC'])
             # print("EXC") # EXC => EXCeption i.e. template line
+        elif line.strip() == "^":
+            lines.append([line, 'CARAT'])
         else:
             # print(f"line.split(): {line.split()}")
             if len(line.split()[0]) > 1 and len(ErrorType.objects.filter(name=line.split()[0][:-1])) > 0:
@@ -187,13 +192,8 @@ def tokenise_fsl(fsl_line):
     print("="*100)
     tokens_raw = wordpunct_tokenize(fsl_line)
 
-
-    # char_check= re.compile(re.escape('"[@!#$%^(&*<>?/\|}{~:]'))
-    # char_check2= re.compile(re.escape("'[@!#$%^(&*)<>?/\|}{~:]"))
-
     tokens = []
     for token in tokens_raw:
-        # if(char_check.search(token) == None and char_check2.search(token) == None):
         if not all(not c.isalnum() for c in token):
             tokens.append(token)
         else:
