@@ -13,15 +13,17 @@
 ### Current Features:
     - Form that takes in text input for their error trace
     - When submitted, takes the user to a results page with help
-    - Different parts of the traceback are highlighted in each section based on type (header, frame summary, exception etc)
+    - Different parts of the traceback are highlighted in each section based on type 
+    - (header, frame summary, frame summary line,  exception, carat)
     - Line number labelling from FSL's linked FSUM info
 
 ### Results Carousel:
     - 1) Presents the user with their trace giving an overview with info on the error type
-    - 2) Presents a breakdown of the users code that brought up the error (i.e. the FSL lines)
-    - 3) Presents an explanation of the error template if there is one (TBD)
-    - 4) Presents a worked example to relate to the error template with description (TBD), if there is one based on tags
-    - 5) Presents help panels of related concepts for additional resources (currently w3schools) based on tags
+    - 2)* Presents a breakdown of the users code that brought up the error
+    - 3) Presents an explanation of the error template if there is one
+    - 4)* Presents a worked example to relate to the error template with description
+    - 5)* Presents help panels of related concepts for additional resources based on tags
+    - (* are optional)
     
 ### Parsing Abilities:
     - Strings
