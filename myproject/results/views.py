@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from .models import ErrorTemplate, ErrorType
 from results.forms import SubmitErrorForm
 from .tips import tip_list
+from .utils import trace_hierarchy, match_template
 import re, os
 from nltk.tokenize import wordpunct_tokenize
 
@@ -30,19 +32,30 @@ def index(request):
     # # Available books (status = 'a')
     # num_instances_available = BookInstance.objects.filter(status__exact='a').count()
     if request.method == "GET":
-        proposed_error_type = ""
-        form = SubmitErrorForm(initial={'error_trace': proposed_error_type})
+        form = SubmitErrorForm()
+
+    elif request.method == "POST":
+        form = SubmitErrorForm(request.POST)
+        if form.is_valid():
+            trace = form.cleaned_data['error_trace']
+            request.session['error_trace'] = trace
+            return HttpResponseRedirect(reverse('solve'))
+        else:
+            form = SubmitErrorForm()
 
     context = {
         'num_templates': num_templates,
         'num_types': num_types,
         'form': form
     }
+
     return render(request, 'index.html', context=context)
 
 def solve(request):
     """View function for presenting answers to the error trace."""
-    error_trace = request.GET['error_trace']
+    # error_trace = request.GET['error_trace']
+    print(request.GET)
+    error_trace = request.session.get('error_trace', '')
 
     no_punct = re.sub(r'[^\w\s]','',error_trace)
     error_trace_list = no_punct.split()
@@ -127,68 +140,7 @@ def solve(request):
     }
     return render(request, 'results.html', context=context)
 
-def match_template(error_trace):
-    """Method to find a error trace from the user input"""
-    templates = ErrorTemplate.objects.all()
-    for e in templates:
-        # make sure regex characters are escaped before replacing
-        pattern_str = re.escape(e.template)
 
-        # replace <n> with wildcard
-        pattern_str = re.sub("<.*?>", "'(.*?)'", pattern_str)
-
-        # match wildcards to params
-        if re.search(pattern_str, error_trace):
-            trace_slices = re.findall(pattern_str, error_trace)
-
-            # return empty params if no wildcard matching
-            if trace_slices == []:
-                return e, []
-
-            # return list of single item if single item
-            elif isinstance(trace_slices[0], str):
-                return e, [trace_slices[0]]
-
-            # need index 0 as trace_slices = [(param1, param2)]
-            return e, trace_slices[0]
-        else:
-            pass#print("Search didn't work")
-    unknown_trace = ErrorTemplate.objects.filter(template="Error not found").first()
-    return unknown_trace, []
-
-def trace_hierarchy(trace):
-    tracelines = trace.split("\n")
-    lines = []
-    # print(f"tracelines: {tracelines}")
-    for line in tracelines:
-        if line == '':
-            continue
-        if re.search(re.escape('Traceback (most recent call last):'), line):
-            lines.append([line, 'HEAD'])
-            # print("HEAD") # HEAD => Header i.e. Traceback Line
-        elif re.search(' File "(.+)", line (\d+), in (.+)', line):
-            res = re.search(' File "(.+)", line (\d+), in (.+)', line)
-            lines.append([line, 'FSUM', [res.group(1), res.group(2), res.group(3)]])
-        elif re.search('File "(.+)", line (\d+)', line):
-            res = re.search('File "(.+)", line (\d+)', line)
-            lines.append([line, 'FSUM', [res.group(1), res.group(2), False]])
-            # print("FSUM") # FSUM => FrameSUMmary i.e. location info
-        elif match_template(line)[0].template != "Error not found":
-            lines.append([line, 'EXC'])
-            # print("EXC") # EXC => EXCeption i.e. template line
-        elif line.strip() == "^":
-            lines.append([line, 'CARAT'])
-        else:
-            # print(f"line.split(): {line.split()}")
-            if len(line.split()[0]) > 1 and len(ErrorType.objects.filter(name=line.split()[0][:-1])) > 0:
-                lines.append([line, 'EXC'])
-                # print("EXC 2") # see EXC
-            elif len(line) > 3 and line[0:3] == ">>>":
-                lines.append([line[3:], 'FSL'])
-            else:
-                lines.append([line, 'FSL'])
-                # print("FSL") # FSL = FrameSummaryLine i.e. the code excerpt
-    return lines
 
 def tokenise_fsl(fsl_line):
     print("="*100)

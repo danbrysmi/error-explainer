@@ -5,13 +5,14 @@
   <p>Welcome to Error Explainer, a tool to help give possible solutions for your Python errors!<br>Developed by <em>Dan Bryan-Smith</em> :)</p>
 
   <h2>Get help here!</h2>
-  <form action="solve" method="get">
+  <form action="" method="post">
     {% csrf_token %}
     <!-- <table>-->
     {{ form }}
     <!-- </table>-->
     <input type="submit" value="Submit">
   </form>
+
   <br><br>
   <h2>Current templates</h2>
   <p>The library has the following record counts:</p>
