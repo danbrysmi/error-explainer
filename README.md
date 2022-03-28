@@ -3,11 +3,13 @@
 
 ### To-Do:
     - Extend trace_hierarchy to accept/reject traces better
+    - Migrate worked examples to models.py
+    - Migrate tips to models.py
     - Link top 10 common errors to traces templates
-    - Improve explanation panels
-    - More tests are always good!
-    - Sort spacing of all elements
+    - Change spacing of all elements to design mockup
+    - Change carousel navigation to buttons at the bottom
     - Add escape characters in parser
+    - Add tests for new parsing abilities
 
 ### Current Features:
     - Form that takes in text input for their error trace
@@ -34,7 +36,7 @@
     - Function and Methods call the parser recursively for their parameters
     - Syntax (commas and colons)
     - Brackets and Square Brackets (tuples, lists and indexing)
-    - Carats ^ on their own for SyntaxError are not parsed as python.
+    - Carats ('^') on their own for SyntaxError are not parsed as python.
     
 ### Report Progress (Draft /#1)
     - Abstract (Done!)
@@ -47,6 +49,7 @@
 
 ### Markdown Explanations:
 Markdown Cheatsheet: https://duckduckgo.com/?q=markdown+cheatsheet&t=ffab&ia=answer&iax=answer 
+
 ### Running the server
 `cd myproject/` (so you are in the same directory as manage.py)<br>
 `python manage.py runserver`
