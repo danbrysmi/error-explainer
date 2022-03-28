@@ -1,7 +1,7 @@
 {% extends "base_template.html" %}
 
 {% block content %}
-
+{% load markdown_extras %}
 <h1>Results</h1>
 
 <br>
@@ -159,7 +159,7 @@
 
                     <h4>Template:</h4>
                     <h5>{{error_template.template}}</h5>
-                    {{error_template.short_desc}}
+                    {{ error_template.short_desc | make_markdown | safe }}
 
                 </div>
             </div>
