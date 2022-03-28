@@ -40,8 +40,6 @@ def index(request):
             trace = form.cleaned_data['error_trace']
             request.session['error_trace'] = trace
             return HttpResponseRedirect(reverse('solve'))
-        else:
-            form = SubmitErrorForm()
 
     context = {
         'num_templates': num_templates,
