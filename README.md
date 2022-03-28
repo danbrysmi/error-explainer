@@ -2,7 +2,6 @@
 ## Dan Bryan-Smith's 3rd Year Project
 
 ### To-Do:
-    - Extend trace_hierarchy to accept/reject traces better
     - Migrate worked examples to models.py
     - Migrate tips to models.py
     - Link top 10 common errors to traces templates
