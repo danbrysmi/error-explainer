@@ -8,7 +8,6 @@
     - Improve explanation panels
     - More tests are always good!
     - Add escape characters in parser
-    - Add parsing for indexes (i.e. square brackets)
 
 ### Current Features:
     - Form that takes in text input for their error trace
@@ -33,6 +32,8 @@
     - Unfinished strings/brackets.
     - Anything else is parssed as an expression
     - Function and Methods call the parser recursively for their parameters
+    - Syntax (commas and colons)
+    - Brackets and Square Brackets (tuples, lists and indexing)
     
 ### Report Progress (Draft /#1)
     - Abstract (Done!)
