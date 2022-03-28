@@ -45,6 +45,8 @@
     - Feedback & Improvements (Not done yet.)
     - Conclusion (Not done yet.)
 
+### Markdown Explanations:
+Markdown Cheatsheet: https://duckduckgo.com/?q=markdown+cheatsheet&t=ffab&ia=answer&iax=answer 
 ### Running the server
 `cd myproject/` (so you are in the same directory as manage.py)<br>
 `python manage.py runserver`
