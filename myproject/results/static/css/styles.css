@@ -19,16 +19,22 @@
     justify-content: center;
     margin-left: 25%;
     margin-right: 25%;
+    font-size: 26px;
 }
 
-.dans-button {
+#wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.dans-button .django-button {
+    color: white;
     margin: 25px;
-    color: red;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
+    background: #0059B1;
     display: flex;
     justify-content: center;
+    font-size: 26px;
+    font-family: inconsolata;
 }
 @font-face {
     font-family: 'monofonto';
@@ -253,6 +259,7 @@ textarea {
 h1 {
     color: #000;
     font-family: Monofonto;
+    padding-bottom: 30px;
 }
 
 .title {

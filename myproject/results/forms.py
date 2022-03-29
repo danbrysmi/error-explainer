@@ -21,5 +21,5 @@ class SubmitErrorForm(forms.Form):
     error_trace = forms.CharField(
     label='',
     validators=[validate_trace],
-    widget=forms.Textarea(attrs={'rows': 16, 'cols': 400, 'placeholder': placeholder_error, 'style': 'font-family: inconsolata'})
+    widget=forms.Textarea(attrs={'rows': 10, 'cols': 400, 'placeholder': placeholder_error, 'style': 'font-family: inconsolata'})
      )

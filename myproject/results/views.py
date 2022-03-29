@@ -51,7 +51,7 @@ def solve(request):
 
     # matching trace to possible templates
     result = match_template(error_trace)
-    error_type = result[0].error_type
+
     if result[1]:
         params = result[1]
     else:
@@ -77,6 +77,15 @@ def solve(request):
 
     # get trace hierarchy
     lines = trace_hierarchy(error_trace)
+
+    # get type of error
+    error_type = ""
+    exc_line = [line for line in lines if line[1]=='EXC']
+
+    if len(ErrorType.objects.filter(name=exc_line[-1][0].split()[0][:-1])) > 0:
+        error_type = ErrorType.objects.filter(name=exc_line[-1][0].split()[0][:-1]).first()
+    else:
+        error_type = ErrorType.objects.filter(name="Unknown").first()
 
     # offset line numbers so FSUM line above gives FSL line number for reference
     line_nums = [0]
@@ -104,7 +113,7 @@ def solve(request):
         indicator_count += 1
     if tip_count > 0:
         indicator_count += 1
-
+    print(f"error_type: {error_type}")
     context = {
         'num_templates': num_templates,
         'num_types': num_types,
