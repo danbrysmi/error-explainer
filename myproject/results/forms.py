@@ -19,6 +19,7 @@ def validate_trace(value):
 
 class SubmitErrorForm(forms.Form):
     error_trace = forms.CharField(
-validators=[validate_trace],
-widget=forms.Textarea(attrs={'rows': 10, 'cols': 400, 'placeholder': placeholder_error, 'style': 'font-family: inconsolata'})
+    label='',
+    validators=[validate_trace],
+    widget=forms.Textarea(attrs={'rows': 16, 'cols': 400, 'placeholder': placeholder_error, 'style': 'font-family: inconsolata'})
      )

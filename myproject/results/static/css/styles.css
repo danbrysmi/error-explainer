@@ -7,6 +7,29 @@
     border-width: 15px;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+    margin: 25px;
+    font-size: 30px;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.dans-button {
+    margin: 25px;
+    color: red;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+}
 @font-face {
     font-family: 'monofonto';
     src: url('/static/fonts/monofonto.otf') format('opentype');
@@ -250,7 +273,7 @@ h1 {
     display: flex;
     flex-direction: column;
     background: #99BCDF;
-    height: 640px;
+    height: 1000px;
     margin: 0px;
     padding: 20px;
     align-items: center;
