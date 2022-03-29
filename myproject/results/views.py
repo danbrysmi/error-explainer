@@ -244,38 +244,3 @@ def tokenise_fsl(fsl_line):
     print("="*100)
 
     return token_data
-
-def extract_example(param): # will become obsolete with models - needs fixing
-    # use absolute path
-    here = os.path.dirname(os.path.abspath(__file__))
-    filename = os.path.join(here, 'examples.py')
-    f = open(filename, 'r')
-    f_list = f.readlines()
-
-    tag_found = False
-    end_tag = False
-    c = 0
-    #print(len(f_list))
-    example_text = ""
-
-    # gather the text from .py file from param tag to the next tag (denoted by ##)
-    while not (tag_found and end_tag) and c < len(f_list):
-        #print(f"{c} {f_list[c]}", end="")
-        if not tag_found:
-            if f_list[c] == "## " + param + "\n":
-                #print("Start tag found!")
-                tag_found = True
-
-        elif not end_tag:
-            if len(f_list[c]) > 1 and f_list[c][0:2] == "##":
-                #print("Next tag found!")
-                end_tag = True
-            else:
-                example_text += f_list[c]
-        c += 1
-
-    # False if tag section was not located or end tag not found
-    if not tag_found or not end_tag:
-        return False
-
-    return example_text

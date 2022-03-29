@@ -38,18 +38,6 @@ class MatchTemplateTestCase(TestCase):
         self.assertEqual(temp[0].error_type, self.e_type)
         self.assertEqual(temp[0].template, "NewError: <1> is wrong")
 
-# Getting example python code out of example.py
-class ExtractExampleTestCase(TestCase):
-    def test_extract_param_on_testcase(self):
-        """Test that example python code is extracted"""
-        example = extract_example("testcase")
-        self.assertEqual(example, '# this is a test\nprint("Eggs")\n')
-
-    def test_extract_param_invalid_tag(self):
-        """Test that False is returned with an unknown tag"""
-        example = extract_example("eggs")
-        self.assertEqual(example, False)
-
 class TraceHierarchyTestCase(TestCase):
     def setUp(self):
         self.good_test_trace = 'Traceback (most recent call last):\n  File "<pyshell#0>", line 1, in <module>\n    1 + "d"\nNewError: \'dan\' is wrong'
