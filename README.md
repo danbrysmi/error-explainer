@@ -2,7 +2,6 @@
 ## Dan Bryan-Smith's 3rd Year Project
 
 ### To-Do:
-    - Migrate worked examples to models.py
     - Migrate tips to models.py
     - Link top 10 common errors to traces templates
     - Change spacing of all elements to design mockup
@@ -16,6 +15,7 @@
     - Different parts of the traceback are highlighted in each section based on type 
     - (header, frame summary, frame summary line,  exception, carat)
     - Line number labelling from FSL's linked FSUM info
+    - Examples stored in database
 
 ### Results Carousel:
     - 1) Presents the user with their trace giving an overview with info on the error type
