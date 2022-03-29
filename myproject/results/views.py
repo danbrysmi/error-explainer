@@ -3,7 +3,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from .models import ErrorTemplate, ErrorType, Example, Tip
 from results.forms import SubmitErrorForm
-from .tips import tip_list
 from .utils import trace_hierarchy, match_template
 import re, os
 from nltk.tokenize import wordpunct_tokenize
@@ -62,8 +61,8 @@ def solve(request):
     # get list of applicable tags and wildcards from the <n>'s in the template
     tags = list(temp.tags.names())
     tags.extend([p.lower() for p in params])
-    # tip_list - NEEDS MIGRATING TO A MODEL, will become obsolete
-    relevant_tips = [tip for tip in tip_list if not set(tags).isdisjoint(tip['tags'])]
+
+    relevant_tips = list(Tip.objects.filter(tags__name__in=tags))
 
     # if tip_count = 0, no point showing tip page on carousel
     tip_count = len(relevant_tips)
