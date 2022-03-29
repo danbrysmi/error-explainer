@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import ErrorTemplate, ErrorType
+from .models import ErrorTemplate, ErrorType, Example, Tip
 from results.forms import SubmitErrorForm
 from .tips import tip_list
 from .utils import trace_hierarchy, match_template
@@ -70,10 +70,10 @@ def solve(request):
 
     # extract examples from examples.py based on tags (change me to a model!)
     examples = []
-    for tag in tags:
-        example = extract_example(tag)
-        if example:
-            examples.append(example)
+    examples = list(Example.objects.filter(tags__name__in=tags))
+        # example = extract_example(tag)
+        # if example:
+        #     examples.append(example)
     example_count = len(examples)
 
     # get trace hierarchy
