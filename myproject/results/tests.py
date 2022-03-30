@@ -1,6 +1,7 @@
 from django.test import TestCase
 from results.models import ErrorTemplate, ErrorType
-from results.views import extract_example, match_template, trace_hierarchy, tokenise_fsl
+from results.views import tokenise_fsl
+from results.utils import match_template, trace_hierarchy
 # Create your tests here.
 
 #################
@@ -71,14 +72,14 @@ class TokeniseFslTestCase(TestCase):
         self.assertEqual(data, [["string", 'hello world']])
 
     def test_reconise_multiword_string_double(self):
-        #double quoted multi
+        # double quoted multi
         data = tokenise_fsl('"hello world"')
         self.assertEqual(data, [["string", "hello world"]])
 
-    # def test_escaped_single_quote(self):
-    #     # escaped '
-    #     data = tokenise_fsl("'don\'t'")
-    #     self.assertEqual(data, [["string", 'don\'t']])
+    def test_escaped_single_quote(self):
+        # escaped '
+        data = tokenise_fsl("'don\\'t'")
+        self.assertEqual(data, [["string", "don\\'t"]])
 
     def test_recognise_int(self):
         data = tokenise_fsl("3")
@@ -102,7 +103,7 @@ class TokeniseFslTestCase(TestCase):
 
     def test_recognise_function_Nparam(self):
         data = tokenise_fsl("my_func(arg1, arg2, arg3)")
-        self.assertEqual(data, [["function", {"name" : "my_func", "params" : [["expression", "arg1"], ["expression", "arg2"], ["expression", "arg3"]]}]])
+        self.assertEqual(data, [["function", {"name" : "my_func", "params" : [["expression", "arg1"], ["comma", ","], ["expression", "arg2"], ["comma", ","], ["expression", "arg3"]]}]])
 
     def test_recognise_nested_function(self):
         data = tokenise_fsl("my_func1(my_func2())")
@@ -118,7 +119,7 @@ class TokeniseFslTestCase(TestCase):
 
     def test_recognise_method_Nparam(self):
         data = tokenise_fsl("thing.my_meth(arg1, arg2, arg3)")
-        self.assertEqual(data, [["expression", "thing"], ["method", {"name" : "my_meth", "params" : [["expression", "arg1"], ["expression", "arg2"], ["expression", "arg3"]]}]])
+        self.assertEqual(data, [["expression", "thing"], ["method", {"name" : "my_meth", "params" : [["expression", "arg1"], ["comma", ","], ["expression", "arg2"], ["comma", ","], ["expression", "arg3"]]}]])
 
     def test_recognise_nested_method(self):
         data = tokenise_fsl("thing.my_meth1(thing.my_meth2())")
@@ -130,10 +131,7 @@ class TokeniseFslTestCase(TestCase):
 
     def test_recognise_unfinished_string(self):
         data = tokenise_fsl('"hello')
-        self.assertEqual(data, [["string-semi", '"hello']])
-
-    def test_recognise_unfinished_brackets(self):
-        pass
+        self.assertEqual(data, [["string-semi", 'hello']])
 
     def test_recognise_attribute(self):
         data = tokenise_fsl('thing.name')

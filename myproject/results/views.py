@@ -137,12 +137,28 @@ def solve(request):
     }
     return render(request, 'results.html', context=context)
 
-
+def combine_escapes(input_list):
+    new_tokens = []
+    for token in input_list:
+        if token == '"' or token == "'":
+            if len(new_tokens) > 0 and new_tokens[-1] == "\\":
+                new_tokens[-1] += token
+            else:
+                new_tokens.append(token)
+        else:
+            new_tokens.append(token)
+    # print(f"Escape Help: {new_tokens}")
+    return new_tokens
 
 def tokenise_fsl(fsl_line):
     print("="*100)
+    print(f"fsl:line {repr(fsl_line)}")
     tokens_raw = wordpunct_tokenize(fsl_line)
-
+    fsl_copy = fsl_line
+    chars = list(fsl_line)
+    print(f"chars: {chars}")
+    chars = combine_escapes(chars)
+    print(f"chars escape: {chars}")
     tokens = []
     for token in tokens_raw:
         if not all(not c.isalnum() for c in token):
@@ -150,33 +166,77 @@ def tokenise_fsl(fsl_line):
         else:
             tokens = tokens + list(token)
     print(f"Tokens (after specials): {tokens}")
+
+    tokens = combine_escapes(tokens)
+
     in_str = False
     new_str = ""
+    new_str_test = ""
     in_brackets = 0
     in_square = 0
     func_name = ""
     meth_name = ""
     args = []
     token_data = []
-
+    escaped = False
+    print(tokens)
     for token in tokens:
+        print(f"Chars: {chars}")
         if not in_str and token == '"':
+            print("Found start \" ")
             in_str = "double"
             new_str = ""
+            str_slice = ""
+            start_index = chars.index('"')
+            print(f"start index {start_index}")
+            if '"' in chars[start_index+1:]:
+                end_index = chars.index('"', start_index+1)
+                str_slice = "".join(chars[start_index+1:end_index])
+                print(str_slice)
+                del chars[start_index:end_index+1]
+                token_data.append(['string', str_slice])
+            else:
+                str_slice = "".join(chars[start_index+1:])
+                print(str_slice)
+                del chars[start_index:]
+                token_data.append(['string-semi', str_slice])
         elif not in_str and token == "'":
+            print("Found start \' ")
             in_str = "single"
             new_str = ""
+            str_slice = ""
+            start_index = chars.index("'")
+            print(f"start index {start_index}")
+            if "'" in chars[start_index+1:]:
+                end_index = chars.index("'", start_index+1)
+                str_slice = "".join(chars[start_index+1:end_index])
+                print(str_slice)
+                del chars[start_index:end_index+1]
+                token_data.append(['string', str_slice])
+            else:
+                str_slice = "".join(chars[start_index+1:])
+                print(str_slice)
+                del chars[start_index:]
+                token_data.append(['string-semi', str_slice])
         elif in_str == "double" and token == '"':
             in_str = False
-            token_data.append(["string", new_str])
+            # token_data.append(["string", new_str])
         elif in_str == "single" and token == "'":
             in_str = False
-            token_data.append(["string", new_str])
+            # token_data.append(["string", new_str])
         elif in_str:
-            if len(new_str) > 0:
-                new_str += " " + token
-            else:
-                new_str += token
+            pass
+        #     if len(new_str) > 0:
+        #         if token == "\\'" or token == '\\"':
+        #             new_str = new_str + token
+        #             escaped = True
+        #         elif escaped:
+        #             new_str += token
+        #             escaped = False
+        #         else:
+        #             new_str += " " + token
+        #     else:
+        #         new_str += token
         elif token in ["and", "not", "or", "+", "=", "+=", "==", ">=", "<=", ">", "<", "!=", "-", "/", "//", "%", "*", "-=", "/=", "*=", "**"]:
             token_data.append(["operator", token])
             if len(token_data) > 1 and token_data[-2][0] == "operator":
@@ -248,9 +308,12 @@ def tokenise_fsl(fsl_line):
                 token_data.append(["attribute", token])
             else:
                 token_data.append(["expression", token])
-    else:
-        if in_str: # unclosed string
-            token_data.append(["string-semi", '"' + new_str])
+                for c in list(token):
+                    chars.remove(c)
+    # else:
+    #     if in_str: # unclosed string
+    #         token_data.append(["string-semi", '"' + new_str])
+
 
     print(f"Token Data: {token_data}")
     print("="*100)
