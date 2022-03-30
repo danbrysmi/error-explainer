@@ -4,7 +4,6 @@
 ### To-Do:
     - Link top 10 common errors to traces templates
     - Change spacing of all elements to design mockup
-    - Add escape characters in parser
     - Add tests for new parsing abilities
 
 ### Current Features:
@@ -37,6 +36,7 @@
     - Syntax (commas and colons)
     - Brackets and Square Brackets (tuples, lists and indexing)
     - Carats ('^') on their own for SyntaxError are not parsed as python.
+    - Escape characters on strings \" and \'
     
 ### Report Progress (Draft /#1)
     - Abstract (Done!)
