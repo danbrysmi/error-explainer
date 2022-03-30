@@ -54,6 +54,11 @@
                         <h4>It looks like your type of error was a {{error_type.name}}.</h4>
                         <p>{{error_type.desc}}
                         {% endif %}
+                        <div class=buttons>
+                            <!-- <input type="submit" class="django-button" value="Restart" data-target="#results-carousel" data-slide-to="0"> -->
+                            <input type="submit" class="django-button" value="Next" data-target="#results-carousel" data-slide="next">
+                        </div>
+
                 </div>
             </div>
 
@@ -139,6 +144,10 @@
                         {% endif %}
                     {% endfor %}
                     </div>
+                    <div class=buttons>
+                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button" value="Next" data-target="#results-carousel" data-slide="next">
+                    </div>
                 </div>
             </div>
             {% endif %}
@@ -167,6 +176,17 @@
                     <h5>{{error_template.template}}</h5>
                     {{ error_template.short_desc | make_markdown | safe }}
 
+                    {% if last_item != 3 %}
+                    <div class=buttons>
+                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button" value="Next" data-target="#results-carousel" data-slide="next">
+                    </div>
+                    {% else %}
+                    <div class=buttons>
+                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button" value="Restart" data-target="#results-carousel" data-slide-to="0">
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             <!-- PART 4 -->
@@ -182,6 +202,17 @@
                         <pre><code class="python">{{ ex.code_right }}</code></pre>
                         <p>{{ ex.desc_right }}
                     {% endfor %}
+                    {% if last_item != 4 %}
+                    <div class=buttons>
+                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button" value="Next" data-target="#results-carousel" data-slide="next">
+                    </div>
+                    {% else %}
+                    <div class=buttons>
+                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button" value="Restart" data-target="#results-carousel" data-slide-to="0">
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             {% endif %}
@@ -207,18 +238,22 @@
                           </div>
                           {% endfor %}
                      </div>
+                    <div class=buttons>
+                        <input type="submit" class="django-button" value="Restart" data-target="#results-carousel" data-slide-to="0">
+                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
+                    </div>
                 </div>
             </div>
             {% endif %}
 
-          <a class="carousel-control-prev" href="#results-carousel" role="button" data-slide="prev">
+          <!-- <a class="carousel-control-prev" href="#results-carousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
           </a>
           <a class="carousel-control-next" href="#results-carousel" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
-          </a>
+          </a> -->
       </div>
     </div>
 </div>

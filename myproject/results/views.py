@@ -105,14 +105,17 @@ def solve(request):
     # zip two lists together so they can be iterated simultaneously in template
     lines_zipped = zip(lines, line_nums)
 
-    # count of total number of items needed in carousel
+    # count of total number of items needed in carousel and last item number
     indicator_count = 2
+    last_item = 3
     if fsl_count > 0:
         indicator_count += 1
     if example_count > 0:
         indicator_count += 1
+        last_item = 4
     if tip_count > 0:
         indicator_count += 1
+        last_item = 5
     print(f"error_type: {error_type}")
     context = {
         'num_templates': num_templates,
@@ -129,7 +132,8 @@ def solve(request):
         'fsl_count' : fsl_count,
         'example_count' : example_count,
         'tip_count' : tip_count,
-        'indicator_count' : indicator_count
+        'indicator_count' : indicator_count,
+        'last_item' : last_item
     }
     return render(request, 'results.html', context=context)
 
