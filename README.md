@@ -4,13 +4,13 @@
 ### To-Do:
     - Link top 10 common errors to traces templates
     - Change spacing of all elements to design mockup
-    - Change carousel navigation to buttons at the bottom
     - Add escape characters in parser
     - Add tests for new parsing abilities
 
 ### Current Features:
     - Form that takes in text input for their error trace
-    - When submitted, takes the user to a results page with help
+    - When submitted, takes the user to a results page with help as carousel
+    - Carousel navigated by buttons at the bottom
     - Different parts of the traceback are highlighted in each section based on type 
     - (header, frame summary, frame summary line,  exception, carat)
     - Line number labelling from FSL's linked FSUM info
