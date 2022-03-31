@@ -80,6 +80,10 @@ class TokeniseFslTestCase(TestCase):
         data = tokenise_fsl("'don\\'t'")
         self.assertEqual(data, [["string", "don\\'t"]])
 
+    def test_escaped_speech(self):
+        data = tokenise_fsl("'\\\"Hurry!\\\"'")
+        self.assertEqual(data, [["string", '\\"Hurry!\\"']])
+
     def test_recognise_int(self):
         data = tokenise_fsl("3")
         self.assertEqual(data, [["int", "3"]])
@@ -91,6 +95,38 @@ class TokeniseFslTestCase(TestCase):
     def test_recognise_decimal(self):
         data = tokenise_fsl(".5")
         self.assertEqual(data, [["float", "0.5"]])
+
+    def test_recognise_brackets_empty(self):
+        data = tokenise_fsl("()")
+        self.assertEqual(data, [["brackets", ["items", []]]])
+
+    def test_recognise_brackets_1item(self):
+        data = tokenise_fsl("(5)")
+        self.assertEqual(data, [["brackets", ["items", [["int", "5"]]]]])
+
+    def test_recognise_brackets_Nitems(self):
+        data = tokenise_fsl("(5, 6)")
+        self.assertEqual(data, [["brackets", ["items", [["int", "5"], ["comma", ","], ["int", "6"]]]]])
+
+    def test_recognise_nested_brackets(self):
+        data = tokenise_fsl("(1, (1, 2))")
+        self.assertEqual(data, [["brackets", ["items", [["int", "1"], ["comma", ","], ["brackets", ["items", [["int", "1"], ["comma", ","], ["int", "2"]]]]]]]])
+
+    def test_recognise_squ_brackets_empty(self):
+        data = tokenise_fsl("[]")
+        self.assertEqual(data, [["square_brackets", ["items", []]]])
+
+    def test_recognise__squ_brackets_1item(self):
+        data = tokenise_fsl("[5]")
+        self.assertEqual(data, [["square_brackets", ["items", [["int", "5"]]]]])
+
+    def test_recognise__squ_brackets_Nitems(self):
+        data = tokenise_fsl("[5, 6]")
+        self.assertEqual(data, [["square_brackets", ["items", [["int", "5"], ["comma", ","], ["int", "6"]]]]])
+
+    def test_recognise__squ_nested_brackets(self):
+        data = tokenise_fsl("[1, [1, 2]]")
+        self.assertEqual(data, [["square_brackets", ["items", [["int", "1"], ["comma", ","], ["square_brackets", ["items", [["int", "1"], ["comma", ","], ["int", "2"]]]]]]]])
 
     def test_recognise_function(self):
         data = tokenise_fsl("my_func()")
@@ -135,3 +171,15 @@ class TokeniseFslTestCase(TestCase):
     def test_recognise_attribute(self):
         data = tokenise_fsl('thing.name')
         self.assertEqual(data, [["expression", "thing"], ["attribute", "name"]])
+
+    def test_recognise_colon(self):
+        data = tokenise_fsl(':')
+        self.assertEqual(data, [["colon", ":"]])
+
+    def test_recognise_unfinished_bracket(self):
+        data = tokenise_fsl('(1, 2')
+        self.assertEqual(data, [["bracket_start", "("], ["int", "1"], ["comma", ","], ["int", "2"]])
+
+    def test_recognise_colon(self):
+        data = tokenise_fsl(':')
+        self.assertEqual(data, [["colon", ":"]])

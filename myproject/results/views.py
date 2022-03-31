@@ -182,41 +182,41 @@ def tokenise_fsl(fsl_line):
     escaped = False
     print(tokens)
     for token in tokens:
-        print(f"Chars: {chars}")
+        #print(f"Chars: {chars}")
         if not in_str and token == '"':
-            print("Found start \" ")
+            #print("Found start \" ")
             in_str = "double"
             new_str = ""
             str_slice = ""
             start_index = chars.index('"')
-            print(f"start index {start_index}")
+            #print(f"start index {start_index}")
             if '"' in chars[start_index+1:]:
                 end_index = chars.index('"', start_index+1)
                 str_slice = "".join(chars[start_index+1:end_index])
-                print(str_slice)
+                #print(str_slice)
                 del chars[start_index:end_index+1]
                 token_data.append(['string', str_slice])
             else:
                 str_slice = "".join(chars[start_index+1:])
-                print(str_slice)
+                #print(str_slice)
                 del chars[start_index:]
                 token_data.append(['string-semi', str_slice])
         elif not in_str and token == "'":
-            print("Found start \' ")
+            #print("Found start \' ")
             in_str = "single"
             new_str = ""
             str_slice = ""
             start_index = chars.index("'")
-            print(f"start index {start_index}")
+            #print(f"start index {start_index}")
             if "'" in chars[start_index+1:]:
                 end_index = chars.index("'", start_index+1)
                 str_slice = "".join(chars[start_index+1:end_index])
-                print(str_slice)
+                #print(str_slice)
                 del chars[start_index:end_index+1]
                 token_data.append(['string', str_slice])
             else:
                 str_slice = "".join(chars[start_index+1:])
-                print(str_slice)
+                #print(str_slice)
                 del chars[start_index:]
                 token_data.append(['string-semi', str_slice])
         elif in_str == "double" and token == '"':
