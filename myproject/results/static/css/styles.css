@@ -327,7 +327,7 @@ h1 {
     display: flex;
     flex-direction: column;
     background: #99BCDF;
-    height: 800px;
+    height: 720px;
     margin: 0px;
     padding: 20px;
     align-items: center;
@@ -339,4 +339,15 @@ p {
 body {
   background-color: #99BCDF;
   margin: 0px;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
+}
+#page-container {
+  position: relative;
+  min-height: 100vh;
 }

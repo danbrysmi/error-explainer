@@ -19,11 +19,12 @@
 
 </head>
 <body>
-
+    <div id="page-container">
     <div class="title"><a href="{% url 'index' %}">ERROR EXPLAINER</a></div>
     {% block content %}{% endblock %}
 
-    <footer><div class="title">Made by Dan Bryan-Smith, University of Manchester</div></footer>
+    <footer id="footer"><div class="title">Made by Dan Bryan-Smith, University of Manchester</div></footer>
+</div>
 <script>
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
