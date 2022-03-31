@@ -3,7 +3,6 @@
 
 ### To-Do:
     - Link top 10 common errors to traces templates (2 to go!)
-    - Add tests for new parsing abilities
 
 ### Current Features:
     - Changed spacing of all elements to design mockup
@@ -23,7 +22,7 @@
     - 5)* Presents help panels of related concepts for additional resources based on tags
     - (* are optional)
     
-### Parsing Abilities:
+### Parsing Abilities (all items now have tests):
     - Strings
     - Ints and floats
     - Functions and methods
