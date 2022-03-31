@@ -32,14 +32,12 @@
     grid-template-columns: auto auto;
     padding: 10px;
     width: 80%;
-    row-gap: 75px;
-    column-gap: 40px;
 }
 
 .grid-item-right {
   background-color: rgba(255, 255, 255, 0.8);
   border: 10px solid rgba(184, 240, 128, 0.8);
-  padding: 20px;
+  padding: 5px;
   font-size: 20px;
 }
 .grid-item-wrong {
@@ -67,6 +65,7 @@
 .buttons {
     display: flex;
     align-items: flex-end;
+    margin: 20px;
 }
 
 @font-face {

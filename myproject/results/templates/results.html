@@ -174,7 +174,7 @@
 
                     <h4>Template:</h4>
                     <h5>{{error_template.template}}</h5>
-                    {{ error_template.short_desc | make_markdown | safe }}
+                    <div>{{ error_template.short_desc | make_markdown | safe }}</div>
 
                     {% if last_item != 3 %}
                     <div class=buttons>
@@ -198,9 +198,9 @@
                     <h1>Examples: {{exc_line}}</h1>
                     {% for ex in examples %}
                     <div class="grid-container">
-                        <div class="grid-item-wrong"><pre><code class="python">{{ ex.code_wrong }}</code></pre></div>
+                        <div class="grid-item-wrong"><pre><code class="language-python">{{ ex.code_wrong }}</code></pre></div>
                         <div class="grid-item-desc"><p>{{ ex.desc_wrong | make_markdown | safe }}</p></div>
-                        <div class="grid-item-right"><pre><code class="python">{{ ex.code_right }}</code></pre></div>
+                        <div class="grid-item-right"><pre><code class="language-python">{{ ex.code_right }}</code></pre></div>
                         <div class="grid-item-desc"><p>{{ ex.desc_right | make_markdown | safe }}</p></div>
                     </div>
 
