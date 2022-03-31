@@ -48,9 +48,9 @@
                     </div>
                     <br>
                     {% if error_type.name == "Unknown" %}
-                        <h4>Looks like we couldn't find your error :(</h4>
+                        <h2>Looks like we couldn't find your error :(</h2>
                     {% else %}
-                        <h4>It looks like your type of error was a {{error_type.name}}.</h4>
+                        <h2>It looks like your type of error was a {{error_type.name}}.</h2>
                         <p>{{error_type.desc}}
                         {% endif %}
                         <div class=buttons>
@@ -169,7 +169,7 @@
                     </div></div>
                     <br>
 
-                    <div style="width: 80%; text-align: center;">{{ error_template.short_desc | make_markdown | safe }}</div>
+                    <div id="explanation" style="width: 60%; text-align: center; font-size: 32px;">{{ error_template.short_desc | make_markdown | safe }}</div>
 
                     {% if last_item != 3 %}
                     <div class=buttons>

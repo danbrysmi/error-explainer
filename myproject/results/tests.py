@@ -55,7 +55,6 @@ class TraceHierarchyTestCase(TestCase):
 
 class TokeniseFslTestCase(TestCase):
 
-    # NOTE - JUST SWITCHED TO WORDPUNCT_TOKENIZE WHICH RUINS THE TOKENISE_FSL FUNC
     def test_recognise_string(self):
         # single quoted
         data = tokenise_fsl("'hello'")
