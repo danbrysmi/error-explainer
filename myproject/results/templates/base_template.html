@@ -20,9 +20,10 @@
 </head>
 <body>
 
-    <div class="title"><a href="{% url 'index' %}"><h1>Error Explainer</h1></a></div>
+    <div class="title"><a href="{% url 'index' %}">ERROR EXPLAINER</a></div>
     {% block content %}{% endblock %}
 
+    <footer><div class="title">Made by Dan Bryan-Smith, University of Manchester</div></footer>
 <script>
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();

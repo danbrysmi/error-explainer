@@ -30,7 +30,6 @@
             <div class="carousel-item active">
                 <div class="carousel-flex-container">
                     <h1>Results</h1>
-                    <br>
                     <div style="width:50%; background:#D4D4D4;">
                         <h2 style="text-align:center;">Overview</h2>
                         <div id="trace-view">
@@ -68,7 +67,6 @@
             <div class="carousel-item">
                 <div class="carousel-flex-container">
                     <h1>Results</h1>
-                    <br>
                     <div style="width:50%; background:#D4D4D4"><h2>Trace</h2>
                         <div id="trace-view">
                         {% for line in lines %}
@@ -84,7 +82,6 @@
                         {% endfor %}
                         </div>
                     </div>
-                    <br>
                     <div id=code style="width:50%;">
                     {% for line, l_num in lines_zipped %}
                         {% if line.1 == 'FSL' %}
@@ -172,9 +169,7 @@
                     </div></div>
                     <br>
 
-                    <h4>Template:</h4>
-                    <h5>{{error_template.template}}</h5>
-                    <div>{{ error_template.short_desc | make_markdown | safe }}</div>
+                    <div style="width: 80%;">{{ error_template.short_desc | make_markdown | safe }}</div>
 
                     {% if last_item != 3 %}
                     <div class=buttons>
@@ -193,7 +188,7 @@
             <!-- TEMPLATE EXAMPLES -->
             {% if example_count > 0 %}
             <div class="carousel-item">
-                <div class="carousel-flex-container">
+                <div class="carousel-flex-container" style="overflow: hidden scroll;">
 
                     <h1>Examples: {{exc_line}}</h1>
                     {% for ex in examples %}
@@ -242,8 +237,8 @@
                           {% endfor %}
                      </div>
                     <div class=buttons>
-                        <input type="submit" class="django-button" value="Restart" data-target="#results-carousel" data-slide-to="0">
                         <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button" value="Restart" data-target="#results-carousel" data-slide-to="0">
                     </div>
                 </div>
             </div>
@@ -260,7 +255,7 @@
       </div>
     </div>
 </div>
-<br>
+<!-- <br>
 <br>
 
 <br>
@@ -275,7 +270,7 @@ with parameters:<br>
 with tags:<br>
 {% for t in tags %}
     {{ t }}<br>
-{% endfor %}
+{% endfor %} -->
 <script>
 $('#results-carousel').carousel({
   interval: false,

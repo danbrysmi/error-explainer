@@ -77,6 +77,16 @@
     src: url('/static/fonts/Inconsolata-Regular.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'pixeloid';
+    src: url('/static/fonts/pixeloid.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'ptsans';
+    src: url('/static/fonts/PTSans-Regular.ttf') format('truetype');
+}
+
 #code-view p {
   background: #FFD43B;
   white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS */
@@ -297,8 +307,13 @@ h1 {
 .title {
     background: #0059B1;
     text-align: center;
-    padding-top: 25px;
-    padding-bottom: 25px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-family: pixeloid;
+    font-size: 30px;
+}
+.title a{
+    color: #FFFFFF;
 }
 .flex-container {
     display: flex;
@@ -316,9 +331,12 @@ h1 {
     margin: 0px;
     padding: 20px;
     align-items: center;
-
 }
-
-/* body {
+p {
+    font-family: Ptsans;
+    font-size: 20px;
+}
+body {
   background-color: #99BCDF;
-} */
+  margin: 0px;
+}
