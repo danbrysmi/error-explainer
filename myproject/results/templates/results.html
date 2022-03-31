@@ -195,12 +195,15 @@
             <div class="carousel-item">
                 <div class="carousel-flex-container">
 
-                    <h4>Examples</h4>
+                    <h1>Examples: {{exc_line}}</h1>
                     {% for ex in examples %}
-                        <pre><code class="python">{{ ex.code_wrong }}</code></pre>
-                        <p>{{ ex.desc_wrong }}
-                        <pre><code class="python">{{ ex.code_right }}</code></pre>
-                        <p>{{ ex.desc_right }}
+                    <div class="grid-container">
+                        <div class="grid-item-wrong"><pre><code class="python">{{ ex.code_wrong }}</code></pre></div>
+                        <div class="grid-item-desc"><p>{{ ex.desc_wrong | make_markdown | safe }}</p></div>
+                        <div class="grid-item-right"><pre><code class="python">{{ ex.code_right }}</code></pre></div>
+                        <div class="grid-item-desc"><p>{{ ex.desc_right | make_markdown | safe }}</p></div>
+                    </div>
+
                     {% endfor %}
                     {% if last_item != 4 %}
                     <div class=buttons>

@@ -133,7 +133,8 @@ def solve(request):
         'example_count' : example_count,
         'tip_count' : tip_count,
         'indicator_count' : indicator_count,
-        'last_item' : last_item
+        'last_item' : last_item,
+        'exc_line': exc_line[0][0]
     }
     return render(request, 'results.html', context=context)
 

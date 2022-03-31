@@ -23,10 +23,37 @@
 }
 
 #wrapper {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+    width: 80%;
+    row-gap: 75px;
+    column-gap: 40px;
+}
+
+.grid-item-right {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 10px solid rgba(184, 240, 128, 0.8);
+  padding: 20px;
+  font-size: 20px;
+}
+.grid-item-wrong {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 10px solid rgba(240, 128, 128, 0.8);
+  padding: 20px;
+  font-size: 20px;
+}
+.grid-item-desc {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  font-size: 20px;
+  text-align: center;
+}
 .dans-button .django-button {
     color: white;
     margin: 25px;
@@ -36,6 +63,12 @@
     font-size: 26px;
     font-family: inconsolata;
 }
+
+.buttons {
+    display: flex;
+    align-items: flex-end;
+}
+
 @font-face {
     font-family: 'monofonto';
     src: url('/static/fonts/monofonto.otf') format('opentype');
