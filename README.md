@@ -2,11 +2,11 @@
 ## Dan Bryan-Smith's 3rd Year Project
 
 ### To-Do:
-    - Link top 10 common errors to traces templates
-    - Change spacing of all elements to design mockup
+    - Link top 10 common errors to traces templates (2 to go!)
     - Add tests for new parsing abilities
 
 ### Current Features:
+    - Changed spacing of all elements to design mockup
     - Form that takes in text input for their error trace
     - When submitted, takes the user to a results page with help as carousel
     - Carousel navigated by buttons at the bottom
