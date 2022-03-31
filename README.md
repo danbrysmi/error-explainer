@@ -1,8 +1,12 @@
 # Python Error Explainer
 ## Dan Bryan-Smith's 3rd Year Project
 
+## Info for Markers:
+- myproject holds the code for the educational tool ('Error Explainer')
+- School Placement Resources holds the documents used for the after school club at WHGS ('Digital Music Makers')
+
 ### To-Do:
-    - Link top 10 common errors to traces templates (2 to go!)
+    - All Done! (for now...)
 
 ### Current Features:
     - Changed spacing of all elements to design mockup
