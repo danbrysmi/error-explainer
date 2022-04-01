@@ -53,9 +53,9 @@
                         <h2>It looks like your type of error was a {{error_type.name}}.</h2>
                         <p>{{error_type.desc}}
                         {% endif %}
-                        <div class=buttons>
+                        <div id="wrapper" class='dans-button'>
                             <!-- <input type="submit" class="django-button" value="Restart" data-target="#results-carousel" data-slide-to="0"> -->
-                            <input type="submit" class="django-button" value="Next" data-target="#results-carousel" data-slide="next">
+                            <input type="submit" class="django-button1" value="Next" data-target="#results-carousel" data-slide="next">
                         </div>
 
                 </div>
@@ -141,9 +141,9 @@
                         {% endif %}
                     {% endfor %}
                     </div>
-                    <div class=buttons>
-                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
-                        <input type="submit" class="django-button" value="Next" data-target="#results-carousel" data-slide="next">
+                    <div id="wrapper" class='dans-button'>
+                        <input type="submit" class="django-button1" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button2" value="Next" data-target="#results-carousel" data-slide="next">
                     </div>
                 </div>
             </div>
@@ -172,14 +172,14 @@
                     <div id="explanation" style="width: 60%; text-align: center; font-size: 32px;">{{ error_template.short_desc | make_markdown | safe }}</div>
 
                     {% if last_item != 3 %}
-                    <div class=buttons>
-                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
-                        <input type="submit" class="django-button" value="Next" data-target="#results-carousel" data-slide="next">
+                    <div id="wrapper" class='dans-button'>
+                        <input type="submit" class="django-button1" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button2" value="Next" data-target="#results-carousel" data-slide="next">
                     </div>
                     {% else %}
-                    <div class=buttons>
-                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
-                        <input type="submit" class="django-button" value="Restart" data-target="#results-carousel" data-slide-to="0">
+                    <div id="wrapper" class='dans-button'>
+                        <input type="submit" class="django-button1" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button2" value="Restart" data-target="#results-carousel" data-slide-to="0">
                     </div>
                     {% endif %}
                 </div>
@@ -201,14 +201,14 @@
 
                     {% endfor %}
                     {% if last_item != 4 %}
-                    <div class=buttons>
-                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
-                        <input type="submit" class="django-button" value="Next" data-target="#results-carousel" data-slide="next">
+                    <div id="wrapper" class='dans-button'>
+                        <input type="submit" class="django-button1" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button2" value="Next" data-target="#results-carousel" data-slide="next">
                     </div>
                     {% else %}
-                    <div class=buttons>
-                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
-                        <input type="submit" class="django-button" value="Restart" data-target="#results-carousel" data-slide-to="0">
+                    <div id="wrapper" class='dans-button'>
+                        <input type="submit" class="django-button1" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button2" value="Restart" data-target="#results-carousel" data-slide-to="0">
                     </div>
                     {% endif %}
                 </div>
@@ -236,9 +236,9 @@
                           </div>
                           {% endfor %}
                      </div>
-                    <div class=buttons>
-                        <input type="submit" class="django-button" value="Back" data-target="#results-carousel" data-slide="prev">
-                        <input type="submit" class="django-button" value="Restart" data-target="#results-carousel" data-slide-to="0">
+                    <div id="wrapper" class='dans-button'>
+                        <input type="submit" class="django-button1" value="Back" data-target="#results-carousel" data-slide="prev">
+                        <input type="submit" class="django-button2" value="Restart" data-target="#results-carousel" data-slide-to="0">
                     </div>
                 </div>
             </div>

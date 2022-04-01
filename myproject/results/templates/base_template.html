@@ -20,10 +20,10 @@
 </head>
 <body>
     <div id="page-container">
-    <div class="title"><a href="{% url 'index' %}">ERROR EXPLAINER</a></div>
+    <header id="header"><div class="title"><a href="{% url 'index' %}">ERROR EXPLAINER</a></div></footer>
     {% block content %}{% endblock %}
 
-    <footer id="footer"><div class="title">Made by Dan Bryan-Smith, University of Manchester</div></footer>
+    <footer id="footer"><div class="foot-title">Made by Dan Bryan-Smith, University of Manchester</div></footer>
 </div>
 <script>
 $(document).ready(function(){
